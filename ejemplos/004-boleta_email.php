@@ -40,7 +40,7 @@ require('../vendor/autoload.php');
 // crear cliente
 $Boleta = new \sasco\BHExpress\API\Boleta($token, $url);
 
-// obtener PDF de la boleta
+// enviar boleta por email
 try {
     $resultado = $Boleta->email($rut, $numero, $email);
 } catch (\sasco\BHExpress\API\Exception $e) {

@@ -24,3 +24,16 @@ O editando el archivo *composer.json* y agregando:
                          "sasco/bhexpress-api-client": "1.*"
                 }
         }
+
+Modo de uso
+-----------
+
+Se recomienda ver los ejemplos para más detalles. Lo que se muestra aquí es sólo
+una idea, y muy resumida:
+
+```php
+    $Boleta = new \sasco\BHExpress\API\Boleta($token);
+    $boleta = $Boleta->emitir($datos);
+    $pdf = $Boleta->pdf($rut_emisor, $boleta['numero']);
+    file_put_contents('boleta.pdf', $pdf);
+```

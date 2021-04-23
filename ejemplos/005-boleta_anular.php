@@ -40,7 +40,7 @@ require('../vendor/autoload.php');
 // crear cliente
 $Boleta = new \sasco\BHExpress\API\Boleta($token, $url);
 
-// obtener PDF de la boleta
+// anular la boleta
 try {
     $resultado = $Boleta->anular($rut, $numero, $causa);
 } catch (\sasco\BHExpress\API\Exception $e) {
