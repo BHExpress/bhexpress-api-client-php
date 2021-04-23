@@ -21,8 +21,8 @@
 
 /**
  * Ejemplo que muestra los pasos para:
- *  - Consultar el listado de boletas de honorarios emitidas
- * @link https://documenter.getpostman.com/view/5911929/TzCMbnYo#2374fc68-76b1-455f-b367-36ca4fef2c5f
+ *  - Anular una boleta de honorarios electrónica
+ * @link https://documenter.getpostman.com/view/5911929/TzCMbnYo#172c6c87-c752-4255-a6a7-ee63e5d9d169
  * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
  * @version 2021-04-22
  */
@@ -31,26 +31,21 @@
 $url = getenv('BHEXPRESS_API_URL', 'https://bhexpress.cl');
 $token = getenv('BHEXPRESS_API_TOKEN');
 $rut = getenv('BHEXPRESS_EMISOR_RUT');
-$page = 1;
+$numero = 226;
+$causa = 3;
 
 // incluir autocarga de composer
 require('../vendor/autoload.php');
 
 // crear cliente
-$Boletas = new \sasco\BHExpress\API\Boletas($token, $url);
+$Boleta = new \sasco\BHExpress\API\Boleta($token, $url);
 
-// obtener boletas
+// obtener PDF de la boleta
 try {
-    $boletas = $Boletas->listado($rut, [
-        'page' => $page,
-        'periodo' => 202104,
-        //'fecha_desde' => '2021-01-01',
-        //'fecha_hasta' => '2021-03-31',
-        //'receptor_codigo' => '76192083',
-    ]);
+    $resultado = $Boleta->anular($rut, $numero, $causa);
 } catch (\sasco\BHExpress\API\Exception $e) {
     die('Error #'.$e->getCode().': '.$e->getMessage()."\n");
 }
 
-// mostrar boletas
-print_r($boletas);
+// mostrar resultado
+print_r($resultado);

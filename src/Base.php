@@ -19,38 +19,21 @@
  * <http://www.gnu.org/licenses/lgpl.html>.
  */
 
+namespace sasco\BHExpress\API;
+
 /**
- * Ejemplo que muestra los pasos para:
- *  - Consultar el listado de boletas de honorarios emitidas
- * @link https://documenter.getpostman.com/view/5911929/TzCMbnYo#2374fc68-76b1-455f-b367-36ca4fef2c5f
+ * Clase abstracta para trabajar con recursos de la API
  * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
  * @version 2021-04-22
  */
+abstract class Base
+{
 
-// datos a utilizar
-$url = getenv('BHEXPRESS_API_URL', 'https://bhexpress.cl');
-$token = getenv('BHEXPRESS_API_TOKEN');
-$rut = getenv('BHEXPRESS_EMISOR_RUT');
-$page = 1;
+    protected $client;
 
-// incluir autocarga de composer
-require('../vendor/autoload.php');
+    public function __construct($token = null, $url = null)
+    {
+        $this->client = new BHExpress($token, $url);
+    }
 
-// crear cliente
-$Boletas = new \sasco\BHExpress\API\Boletas($token, $url);
-
-// obtener boletas
-try {
-    $boletas = $Boletas->listado($rut, [
-        'page' => $page,
-        'periodo' => 202104,
-        //'fecha_desde' => '2021-01-01',
-        //'fecha_hasta' => '2021-03-31',
-        //'receptor_codigo' => '76192083',
-    ]);
-} catch (\sasco\BHExpress\API\Exception $e) {
-    die('Error #'.$e->getCode().': '.$e->getMessage()."\n");
 }
-
-// mostrar boletas
-print_r($boletas);

@@ -26,22 +26,19 @@ namespace sasco\BHExpress\API;
  * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
  * @version 2021-04-22
  */
-class Boletas
+class Boletas extends Base
 {
-
-    private $client;
-
-    public function __construct($token = null, $url = null)
-    {
-        $this->client = new BHExpress($token, $url);
-    }
 
     public function listado(string $emisor, array $filtros = [])
     {
         $resource = '/bhe/boletas?' . http_build_query($filtros);
-        return $this->client->consume($resource, [], [
-            'X-Bhexpress-Emisor' => $emisor,
-        ])->getBodyDecoded();
+        return $this->client->consume(
+            $resource,
+            [],
+            [
+                'X-Bhexpress-Emisor' => $emisor,
+            ]
+        )->getBodyDecoded();
     }
 
 }
