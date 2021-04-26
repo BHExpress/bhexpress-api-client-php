@@ -79,5 +79,5 @@ Básicamente, lo que hacen estos 4 comandos es:
 3. ﻿Entrar a la carpeta de ejemplos recién copiada.
 4. ﻿Ejecutar con PHP el ejemplo `001-boletas_listado.php`.
 
-Con eso podrás ver el listado de boletas que tengas emitidas para el perído
+Con eso podrás ver el listado de boletas que tengas emitidas para el período
 definido en el ejemplo.
