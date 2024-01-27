@@ -1,25 +1,30 @@
 {
-    "name": "sasco/bhexpress-api-client",
-    "description": "Cliente para realizar la integración con los servicios web de la API de BHExpress",
+    "name": "bhexpress/bhexpress-api-client",
+    "description": "Cliente para realizar la integración con los servicios web de BHExpress desde PHP.",
     "type": "library",
     "keywords": ["bhexpress", "sii", "bhe", "boletas de honorarios electrónicas"],
-    "homepage": "https://bhexpress.cl",
+    "homepage": "https://www.bhexpress.cl",
     "license": "LGPL-3.0+",
     "authors": [
         {
-            "name": "SASCO SpA",
-            "homepage": "https://sasco.cl"
+            "name": "BHExpress",
+            "homepage": "https://www.bhexpress.cl"
         }
     ],
     "support": {
         "issues": "https://github.com/BHExpress/bhexpress-api-client-php/issues",
         "source": "https://github.com/BHExpress/bhexpress-api-client-php"
     },
+    "config": {
+        "platform": {
+            "php": "7.3"
+        }
+    },
     "require": {
-        "php": ">=7.3",
-        "guzzlehttp/guzzle": ">=7.3.0"
+        "php": "^7.3 || ^8.0",
+        "guzzlehttp/guzzle": "^7"
     },
     "autoload": {
-        "psr-4": {"sasco\\BHExpress\\API\\": "src/"}
+        "psr-4": {"bhexpress\\api_client\\": "src/"}
     }
 }
