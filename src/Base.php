@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/lgpl.html>.
  */
 
-namespace sasco\BHExpress\API;
+namespace bhexpress\api_client;
 
 /**
  * Clase abstracta para trabajar con recursos de la API
@@ -31,9 +31,23 @@ abstract class Base
 
     protected $client;
 
+    /**
+     * Constructor de la clase.
+     *
+     * Este método inicializa una nueva instancia del cliente de API BHExpress.
+     * Permite la configuración inicial del token de autenticación y la URL base de la API.
+     *
+     * @param string|null $token Token de autenticación para las solicitudes a la API.
+     *                    Si se proporciona, se utilizará para autenticar todas las solicitudes.
+     *                    De lo contrario, se debe establecer más adelante mediante un método apropiado.
+     * @param string|null $url URL base de la API de BHExpress.
+     *                    Si se proporciona, se establecerá como la URL base para todas las solicitudes.
+     *                    De lo contrario, se debe configurar más adelante para que el cliente funcione correctamente.
+     */
+
     public function __construct($token = null, $url = null)
     {
-        $this->client = new BHExpress($token, $url);
+        $this->client = new ApiClient($token, $url);
     }
 
 }

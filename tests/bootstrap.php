@@ -19,13 +19,32 @@
  * <http://www.gnu.org/licenses/lgpl.html>.
  */
 
-namespace sasco\BHExpress\API;
+// dependencias de composer
+require_once __DIR__ . '/../vendor/autoload.php';
+
+// cargar variables de entorno
+$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__, 'test.env');
+try {
+    $dotenv->load();
+} catch (\Dotenv\Exception\InvalidPathException $e) {
+    die($e->getMessage());
+} catch (\Dotenv\Exception\InvalidFileException $e) {
+    die($e->getMessage());
+}
 
 /**
- * Clase para las excepciones para el cliente de la API
- * @author Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)
- * @version 2021-04-22
+ * Función que carga una variable de entorno o su valor por defecto
+ * @param varname Variable que se desea consultar
+ * @param default Valor por defecto de la variable
  */
-class Exception extends \Exception
+function env($varname, $default = null)
 {
+    if (isset($_ENV[$varname])) {
+        return $_ENV[$varname];
+    }
+    $value = getenv($varname);
+    if ($value !== false) {
+        return $value;
+    }
+    return $default;
 }

@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/lgpl.html>.
  */
 
-namespace sasco\BHExpress\API;
+namespace bhexpress\api_client;
 
 /**
  * Wrapper para trabajar con un grupo de boletas de la API
@@ -29,16 +29,28 @@ namespace sasco\BHExpress\API;
 class Boletas extends Base
 {
 
+    /**
+     * Obtiene un listado de boletas electrónicas emitidas por el emisor especificado, aplicando filtros opcionales.
+     *
+     * Este método consulta la API para obtener un listado de boletas, permitiendo la aplicación de filtros
+     * para refinar los resultados obtenidos, como fechas de emisión, rangos de montos, estados, entre otros.
+     * La solicitud incluye el RUT del emisor en los encabezados para identificar al emisor de las boletas.
+     *
+     * @param string $emisor RUT del emisor de las boletas.
+     * @param array $filtros (opcional) Arreglo asociativo de filtros para aplicar a la consulta de listado.
+     *                        Los filtros deben ser compatibles con los aceptados por la API.
+     * @return mixed Respuesta de la API decodificada del cuerpo de la respuesta HTTP, generalmente un arreglo
+     *               de objetos o un objeto que contiene el listado de boletas y metadatos asociados.
+     */
     public function listado(string $emisor, array $filtros = [])
     {
         $resource = '/bhe/boletas?' . http_build_query($filtros);
-        return $this->client->consume(
-            $resource,
-            [],
-            [
-                'X-Bhexpress-Emisor' => $emisor,
-            ]
-        )->getBodyDecoded();
+
+        $response = $this->client->get($resource, [
+            'X-Bhexpress-Emisor' => $emisor
+        ]);
+
+        return $response->getBody();
     }
 
 }

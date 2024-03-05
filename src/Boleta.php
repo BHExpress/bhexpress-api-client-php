@@ -19,7 +19,7 @@
  * <http://www.gnu.org/licenses/lgpl.html>.
  */
 
-namespace sasco\BHExpress\API;
+namespace bhexpress\api_client;
 
 /**
  * Wrapper para trabajar con una boleta de la API
@@ -29,10 +29,20 @@ namespace sasco\BHExpress\API;
 class Boleta extends Base
 {
 
+    /**
+     * Emite un documento electrónico a través de la API.
+     *
+     * Este método envía los datos del documento a emitir a la API y devuelve la respuesta.
+     * Requiere que el RUT del emisor esté presente en los datos proporcionados.
+     *
+     * @param array $datos Datos del documento a emitir, incluido el RUT del emisor.
+     * @throws ApiException Si falta el RUT del emisor en los datos proporcionados.
+     * @return mixed Respuesta de la API decodificada del cuerpo de la respuesta HTTP.
+     */
     public function emitir($datos)
     {
         if (empty($datos['Encabezado']['Emisor']['RUTEmisor'])) {
-            throw new Exception('Falta RUTEmisor');
+            throw new ApiException('Falta RUTEmisor');
         }
         $resource = '/bhe/emitir';
         return $this->client->consume(
@@ -44,6 +54,15 @@ class Boleta extends Base
         )->getBodyDecoded();
     }
 
+    /**
+     * Obtiene el PDF de un documento electrónico emitido.
+     *
+     * Solicita a la API el PDF del documento identificado por el número de documento y el emisor.
+     *
+     * @param string $emisor RUT del emisor del documento.
+     * @param int $numero Número del documento del cual se desea obtener el PDF.
+     * @return mixed Cuerpo de la respuesta HTTP, que se espera contenga el PDF del documento.
+     */
     public function pdf($emisor, $numero)
     {
         $resource = '/bhe/pdf/' . (int)$numero;
@@ -56,6 +75,17 @@ class Boleta extends Base
         )->getBody();
     }
 
+    /**
+     * Envía por correo electrónico un documento electrónico emitido.
+     *
+     * Este método solicita a la API enviar por correo electrónico el documento identificado
+     * por el número de documento y el emisor al destinatario especificado.
+     *
+     * @param string $emisor RUT del emisor del documento.
+     * @param int $numero Número del documento a enviar.
+     * @param string $email Dirección de correo electrónico del destinatario.
+     * @return mixed Respuesta de la API decodificada del cuerpo de la respuesta HTTP.
+     */
     public function email($emisor, $numero, $email)
     {
         $resource = '/bhe/email/' . (int)$numero;
@@ -72,6 +102,17 @@ class Boleta extends Base
         )->getBodyDecoded();
     }
 
+    /**
+     * Anula un documento electrónico emitido.
+     *
+     * Este método envía una solicitud a la API para anular un documento específico,
+     * identificado por el número de documento y el emisor, con una causa de anulación.
+     *
+     * @param string $emisor RUT del emisor del documento.
+     * @param int $numero Número del documento a anular.
+     * @param string $causa Razón o causa de la anulación del documento.
+     * @return mixed Respuesta de la API decodificada del cuerpo de la respuesta HTTP.
+     */
     public function anular($emisor, $numero, $causa)
     {
         $resource = '/bhe/anular/' . (int)$numero;

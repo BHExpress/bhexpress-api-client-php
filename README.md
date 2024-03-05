@@ -23,7 +23,7 @@ Se recomienda ver los ejemplos para más detalles. Lo que se muestra aquí es s�
 una idea, y muy resumida:
 
 ```php
-$Boleta = new \sasco\BHExpress\API\Boleta($token);
+$Boleta = new \bhexpress\api_client\Boleta($token);
 $boleta = $Boleta->emitir($datos);
 $pdf = $Boleta->pdf($rut_emisor, $boleta['numero']);
 file_put_contents('boleta.pdf', $pdf);
