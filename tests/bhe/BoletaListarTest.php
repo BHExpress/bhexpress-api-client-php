@@ -20,47 +20,40 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use bhexpress\api_client\Boletas;
+use bhexpress\api_client\ApiClient;
 use bhexpress\api_client\ApiException;
 
-class BoletasListadoTest extends TestCase
+class BoletaListarTest extends TestCase
 {
-    protected static $Boletas;
-    protected static $url;
-    protected static $token;
-    protected static $rut;
-    protected static $page;
+
+    protected static $verbose;
+    protected static $client;
+    protected static $emisor_rut;
+    protected static $periodo;
 
     public static function setUpBeforeClass(): void
     {
-        self::$url = env('BHEXPRESS_API_URL', 'https://bhexpress.cl');
-        self::$token = env('BHEXPRESS_API_TOKEN');
-        self::$rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$page = 1;
-
-        // Inicializar el cliente API de Boletas
-        self::$Boletas = new Boletas(self::$token, self::$url);
+        self::$verbose = env('TEST_VERBOSE', false);
+        self::$client = new ApiClient();
+        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
+        self::$periodo = env('TEST_LISTAR_PERIODO', date('Ym'));
     }
 
-    public function testObtenerListadoBoletas()
+    public function test_boleta_listar()
     {
-        $filtros = [
-            'page' => self::$page,
-            'periodo' => 202401,
-            // 'fecha_desde' => '2021-01-01',
-            // 'fecha_hasta' => '2021-03-31',
-            // 'receptor_codigo' => '76192083',
-        ];
-
+        $url = '/bhe/boletas?periodo='.self::$periodo; # Buscar algo similar a urlencode
         try {
-            $response = self::$Boletas->listado(self::$rut, $filtros);
+            $response = self::$client->get($url);
             $this->assertEquals(200, $response->getStatusCode());
+
             if (self::$verbose) {
-                echo "\n",'test_situacion_tributaria_tercero() situacion_tributaria ',$response->getBody(),"\n";
+                echo "\n",'test_boleta_listar() listar ',$response->getBody(),"\n";
             }
+
         } catch (ApiException $e) {
             $this->fail(sprintf('[ApiException %d] %s', $e->getCode(), $e->getMessage()));
         }
     }
 }
- 
+
+?>

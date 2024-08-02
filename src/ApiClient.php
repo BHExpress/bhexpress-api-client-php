@@ -57,6 +57,13 @@ class ApiClient
     private $api_token = null;
 
     /**
+     * El RUT de emisor de las BHE.
+     * 
+     * @var string|null
+     */
+    private $rut_emisor = null;
+
+    /**
      * La última URL utilizada en la solicitud HTTP.
      *
      * @var string|null
@@ -74,13 +81,18 @@ class ApiClient
      * Constructor del cliente de la API.
      *
      * @param string|null $token Token de autenticación para la API.
+     * @param string|null $rut RUT del emisor de las BHE. # NUEVA LINEA
      * @param string|null $url URL base de la API.
      */
-    public function __construct($token = null, $url = null)
+    public function __construct($token = null, $rut= null, $url = null)
     {
         $this->api_token = $token ?: $this->env('BHEXPRESS_API_TOKEN');
         if (!$this->api_token) {
             throw new ApiException('BHEXPRESS_API_TOKEN missing');
+        }
+        $this->rut_emisor = $rut ?: $this->env('BHEXPRESS_EMISOR_RUT');
+        if (!$this->rut_emisor) {
+            throw new ApiException('BHEXPRESS_EMISOR_RUT missing');
         }
 
         $this->api_url = $url ?: $this->env('BHEXPRESS_API_URL') ?: $this->api_url;
@@ -107,6 +119,18 @@ class ApiClient
     public function setToken($token)
     {
         $this->api_token = $token;
+        return $this;
+    }
+
+    /**
+     * Establece el RUT del emisor.
+     * 
+     * @param string $rut RUT del emisor.
+     * @return $this
+     */
+    public function setRut($rut) # NUEVO MÉTODO
+    {
+        $this->rut_emisor = $rut;
         return $this;
     }
 
@@ -301,20 +325,26 @@ class ApiClient
         if (!$this->api_token) {
             throw new ApiException('Falta especificar token para autenticación.', 400);
         }
+        if (!$this->rut_emisor) {
+            throw new ApiException('Falta especificar RUT del emisor.', 400); # NUEVA CONDICIONAL
+        }
         $method = $method ?: ($data ? 'POST' : 'GET');
         $client = new \GuzzleHttp\Client();
         $this->last_url = $this->api_url.$this->api_prefix.$this->api_version.$resource;
+        
         // preparar cabeceras que se usarán
         $options[\GuzzleHttp\RequestOptions::HEADERS] = array_merge([
             'Authorization' => 'Token ' . $this->api_token,
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
+            'X-Bhexpress-Emisor' => $this->rut_emisor, # NUEVA LINEA
         ], $headers);
 
         // agregar datos de la consulta si se pasaron (POST o PUT)
         if ($data) {
             $options[\GuzzleHttp\RequestOptions::JSON] = $data;
         }
+        
         // realizar consulta HTTP
         try {
             $this->last_response = $client->request($method, $this->last_url, $options);

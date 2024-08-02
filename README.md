@@ -19,29 +19,42 @@ $ composer require bhexpress/bhexpress-api-client
 Modo de uso
 -----------
 
-Se recomienda ver los ejemplos para más detalles. Lo que se muestra aquí es sólo
+Se recomienda ver las pruebas para más detalles. Lo que se muestra aquí es sólo
 una idea, y muy resumida:
 
 ```php
-$Boleta = new \bhexpress\api_client\Boleta($token);
-$boleta = $Boleta->emitir($datos);
-$pdf = $Boleta->pdf($rut_emisor, $boleta['numero']);
-file_put_contents('boleta.pdf', $pdf);
+use bhexpress\api_client\ApiClient;
+
+$Boleta = new ApiClient();
+
+$periodo = '202407';
+$url_listar = '/bhe/boletas?periodo='.$periodo; # Buscar algo similar a urlencode
+$response = self::$client->get($url_listar);
+
+echo 'Listado Boletas: '.$response->getBody(); # Resultado del listado
+
+$numero_bhe = '3'; # Número de la BHE a convertir
+$url_pdf = '/bhe/pdf/'.$numero_bhe;
+$pdf = self::$client->get($url_pdf);
+
+file_put_contents('boleta.pdf', $pdf->getBody()); # Función para crear PDF
 ```
 
-Ejemplos
+Los ejemplos anteriores demuestran la capacidad de obtener BHEs emitidas, y en un caso hasta convertir una de ellas en PDF.
+
+Ejecución de cliente de API
 --------
 
-Los ejemplos cubren los siguientes casos:
+Para utilizar este programa y sus servicios, deberás definir las siguientes variables de entorno, a partir de 
+la consola de comandos. En Windows, se hace de la siguiente forma:
 
-- `001-boletas_listado.php`: obtener las boletas de un período.
-- `002-boleta_emitir.php`: emisitir una BHE.
-- `003-boleta_pdf.php`: descargar el PDF de una BHE.
-- `004-boleta_email.php`: enviar por email una BHE.
-- `005-boleta_anular.php`: anular una BHE.
+```shell
+set BHEXPRESS_API_URL="https://bhexpress.cl"
+set BHEXPRESS_API_TOKEN="" # aquí el token obtenido en https://bhexpress.cl/usuarios/perfil#token
+set BHEXPRESS_EMISOR_RUT="" # aquí el RUT del emisor de las BHE
+```
 
-Los ejemplos, por defecto, hacen uso de variables de entornos, si quieres usar
-esto debes tenerlas creadas, por ejemplo, en GNU/Linux, con:
+En Linux, se hace de la siguiente manera:
 
 ```shell
 export BHEXPRESS_API_URL="https://bhexpress.cl"
@@ -49,14 +62,77 @@ export BHEXPRESS_API_TOKEN="" # aquí el token obtenido en https://bhexpress.cl/
 export BHEXPRESS_EMISOR_RUT="" # aquí el RUT del emisor de las BHE
 ```
 
-Luego, para probar los ejemplos, lo más rápido, en GNU/Linux, es crear una
-carpeta para el proyecto y dentro de esta ejecutar:
+Pruebas
+--------
+
+Para los siguientes pasos necesitarás los siguientes programas:
+- php 7.4
+- Composer
+- phpunit/phpunit
+- vlucas/phpdotenv
+- guzzlehttp/guzzle
+
+Crea un archivo llamado `test.env`, y coloca las variables de entorno definidas en `test.env-dist`.
+
+Luego, para ejecutar las pruebas, deberás tener PHP activo. Para más información de qué programas 
+se necesitarán, referirse a `composer.json`.
+
+Por último, ejecuta el siguiente comando en la consola cmd, Windows powershell, o la shell de linux o Apple.
+ Abre la consola desde la ubicación de tu proyecto, y ejecuta:
 
 ```shell
-$ composer require sasco/bhexpress-api-client
-$ cp -ar vendor/sasco/bhexpress-api-client/ejemplos .
-$ cd ejemplos
-$ php 001-boletas_listado.php
+./vendor/bin/phpunit --filter test_boleta_listar
+```
+
+Lo que hizo el comando es ejecutar una prueba que extrae una lista de boletas emitidas en un periodo específico de tiempo. 
+
+Los siguientes comandos pertenecen a las siguientes pruebas:
+
+### BoletaListarTest
+- Ejecuta una prueba que obtiene un listado de boletas en un periodo de tiempo `AAAAMM`.
+- Retorna: Array con todas las boletas emitidas (o vacía si no se han emitido boletas en ese periodo).
+- Variables a utilizar: `TEST_LISTAR_PERIODO`
+
+```shell
+./vendor/bin/phpunit --filter test_boleta_listar
+```
+
+### BoletaEmitirTest
+- Ejecuta una prueba que emite una boleta a un destinatario genérico. Importante anular esta boleta cuando las pruebas se terminen.
+- Retorna: Array con la información de la boleta emitida.
+- Variables a utilizar: `BHEXPRESS_EMISOR_RUT`, `TEST_EMITIR_FECHAEMIS`
+
+```shell
+./vendor/bin/phpunit --filter test_boleta_emitir
+```
+
+### BoletaPdfTest
+- Ejecuta una prueba que convierte una boleta existente en un PDF.
+- Retorna: bytes para crear el PDF.
+- Variables a utilizar: `TEST_PDF_NUMEROBHE`
+
+```shell
+./vendor/bin/phpunit --filter test_boleta_pdf
+```
+
+### BoletaEmailTest
+- Ejecuta una prueba que envía una BHE existente por correo a un destinatario.
+- Retorna: Respuesta con confirmación de que el correo fue enviado a la dirección especificada.
+- Variables a utilizar: `TEST_EMAIL_NUMEROBHE`, `TEST_EMAIL_CORREO`
+
+```shell
+./vendor/bin/phpunit --filter test_boleta_email
+```
+
+### BoletaAnularTest
+- Ejecuta una prueba que anula una BHE que sigue vigente.
+- Retorna: Cabecera de BHE anulada.
+- Variables a utilizar: `TEST_ANULAR_NUMEROBHE`
+
+Esta prueba se debe efectuar teniendo una boleta propia que siga activa pero que desees anular.
+
+```shell
+./vendor/bin/phpunit --filter test_boleta_anular
 ```
 
 Básicamente, lo que hacen estos 4 comandos es:

@@ -20,36 +20,36 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use bhexpress\api_client\Boleta;
+use bhexpress\api_client\ApiClient;
 use bhexpress\api_client\ApiException;
 
 class BoletaEmitirTest extends TestCase
 {
-    protected static $Boleta;
-    protected static $url;
-    protected static $token;
-    protected static $rut;
+
+    protected static $verbose;
+    protected static $client;
+    protected static $emisor_rut;
+    protected static $fecha_emis;
 
     public static function setUpBeforeClass(): void
     {
-        self::$url = getenv('BHEXPRESS_API_URL', 'https://bhexpress.cl');
-        self::$token = getenv('BHEXPRESS_API_TOKEN');
-        self::$rut = getenv('BHEXPRESS_EMISOR_RUT');
-
-        // Inicializar el cliente API de Boleta
-        self::$Boleta = new Boleta(self::$token, self::$url);
+        self::$verbose = env('TEST_VERBOSE', false);
+        self::$client = new ApiClient();
+        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
+        self::$fecha_emis = env('TEST_EMITIR_FECHAEMIS', date('Y-m-d'));
     }
 
-    public function testEmitirBoleta()
+    public function test_boleta_emitir()
     {
-        $datosBoleta = [
+        $url = '/bhe/emitir';
+        $datos_boleta = [
             'Encabezado' => [
                 'IdDoc' => [
-                    'FchEmis' => '2024-02-27',
+                    'FchEmis' => self::$fecha_emis,
                     'TipoRetencion' => 1,
                 ],
                 'Emisor' => [
-                    'RUTEmisor' => self::$rut
+                    'RUTEmisor' => self::$emisor_rut
                 ],
                 'Receptor' => [
                     'RUTRecep' => '66666666-6',
@@ -108,14 +108,16 @@ class BoletaEmitirTest extends TestCase
         ];
 
         try {
-            $boleta = self::$Boleta->emitir($datosBoleta);
-            $this->assertIsArray($boleta, 'La respuesta debe ser un array');
-            $this->assertArrayHasKey('someExpectedKey', $boleta, 'La respuesta debe contener la clave esperada');
+            $response = self::$client->post($url, $datos_boleta);
+            $this->assertEquals(200, $response->getStatusCode());
 
-            // Otros asserts específicos para verificar el contenido de la respuesta...
-            
+            if (self::$verbose) {
+                echo "\n",'test_boleta_emitir() emitir ',$response->getBody(),"\n";
+            }
         } catch (ApiException $e) {
-            $this->fail('La emisión de la boleta falló: ' . $e->getMessage());
+            $this->fail(sprintf('[ApiException %d] %s', $e->getCode(), $e->getMessage()));
         }
     }
 }
+
+?>

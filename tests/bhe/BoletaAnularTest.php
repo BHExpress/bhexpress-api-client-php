@@ -20,38 +20,44 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use bhexpress\api_client\Boleta;
+use bhexpress\api_client\ApiClient;
 use bhexpress\api_client\ApiException;
 
-class BoletaAnulacionTest extends TestCase
+class BoletaAnularTest extends TestCase
 {
-    protected static $Boleta;
-    protected static $url;
-    protected static $token;
-    protected static $rut;
-    protected static $numero;
+
+    protected static $verbose;
+    protected static $client;
+    protected static $emisor_rut;
+    protected static $numero_bhe;
     protected static $causa;
 
     public static function setUpBeforeClass(): void
     {
-        self::$url = env('BHEXPRESS_API_URL', 'https://bhexpress.cl');
-        self::$token = env('BHEXPRESS_API_TOKEN');
-        self::$rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$numero = 226;
+        self::$verbose = env('TEST_VERBOSE', false);
+        self::$client = new ApiClient();
+        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
+        self::$numero_bhe = env('TEST_EMAIL_NUMEROBHE', '0');
         self::$causa = 3;
-
-        // Inicializar el cliente API de Boleta
-        self::$Boleta = new Boleta(self::$token, self::$url);
     }
 
-    public function testAnularBoleta()
+    public function test_boleta_anular()
     {
+        $url = '/bhe/anular/'.self::$numero_bhe;
+        $causa = [
+            'causa' => self::$causa
+        ];
         try {
-            $resultado = self::$Boleta->anular(self::$rut, self::$numero, self::$causa);
-            $this->assertNotNull($resultado, 'El resultado no debe ser nulo');
-            // Aquí puedes agregar más aserciones específicas, como verificar el mensaje de éxito, el código de estado, etc.
+            $response = self::$client->post($url, $causa);
+            $this->assertEquals(200, $response->getStatusCode());
+
+            if (self::$verbose) {
+                echo "\n",'test_boleta_anular() anular ',$response->getBody(),"\n";
+            }
         } catch (ApiException $e) {
             $this->fail(sprintf('[ApiException %d] %s', $e->getCode(), $e->getMessage()));
         }
     }
 }
+
+?>

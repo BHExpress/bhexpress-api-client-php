@@ -1,1 +1,6 @@
 vendor
+test.env
+.phpunit.result.cache
+composer
+Dockerfile
+docs

@@ -20,38 +20,47 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use bhexpress\api_client\Boleta;
+use bhexpress\api_client\ApiClient;
 use bhexpress\api_client\ApiException;
 
 class BoletaEmailTest extends TestCase
 {
-    protected static $Boleta;
-    protected static $url;
-    protected static $token;
-    protected static $rut;
-    protected static $numero;
+
+    protected static $verbose;
+    protected static $client;
+    protected static $emisor_rut;
     protected static $email;
+    protected static $numero_bhe;
 
     public static function setUpBeforeClass(): void
     {
-        self::$url = env('BHEXPRESS_API_URL', 'https://bhexpress.cl');
-        self::$token = env('BHEXPRESS_API_TOKEN');
-        self::$rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$numero = 226;
-        self::$email = env('BHEXPRESS_RECEPTOR_EMAIL');
-
-        // Inicializar el cliente API de Boleta
-        self::$Boleta = new Boleta(self::$token, self::$url);
+        self::$verbose = env('TEST_VERBOSE', false);
+        self::$client = new ApiClient();
+        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
+        self::$email = env('TEST_EMAIL_CORREO', '');
+        self::$numero_bhe = env('TEST_EMAIL_NUMEROBHE', '0');
     }
 
-    public function testEnviarBoletaEmail()
+    public function test_boleta_email()
     {
+        $destinatario = [
+            'destinatario' => [
+                'email' => self::$email
+            ]
+        ];
+        $url = '/bhe/email/'.self::$numero_bhe;
+
         try {
-            $resultado = self::$Boleta->email(self::$rut, self::$numero, self::$email);
-            $this->assertNotNull($resultado, 'El resultado no debe ser nulo');
-            // Aquí puedes agregar más aserciones específicas, como verificar el contenido del resultado, el mensaje de éxito, etc.
+            $response = self::$client->post($url, $destinatario);
+            $this->assertEquals(200, $response->getStatusCode());
+
+            if (self::$verbose) {
+                echo "\n",'test_boleta_email() email ',$response->getBody(),"\n";
+            }
         } catch (ApiException $e) {
             $this->fail(sprintf('[ApiException %d] %s', $e->getCode(), $e->getMessage()));
         }
     }
 }
+
+?>

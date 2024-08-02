@@ -20,47 +20,46 @@
  */
 
 use PHPUnit\Framework\TestCase;
-use bhexpress\api_client\Boleta;
+use bhexpress\api_client\ApiClient;
 use bhexpress\api_client\ApiException;
 
 class BoletaPdfTest extends TestCase
 {
-    protected static $Boleta;
-    protected static $url;
-    protected static $token;
-    protected static $rut;
-    protected static $numero;
-    protected static $archivoPdf;
+
+    protected static $verbose;
+    protected static $client;
+    protected static $emisor_rut;
+    protected static $numero_bhe;
+    protected static $archivo_pdf;
 
     public static function setUpBeforeClass(): void
     {
-        self::$url = getenv('BHEXPRESS_API_URL', 'https://bhexpress.cl');
-        self::$token = getenv('BHEXPRESS_API_TOKEN');
-        self::$rut = getenv('BHEXPRESS_EMISOR_RUT');
-        self::$numero = 226;
-        self::$archivoPdf = self::$rut . '_bhe_' . self::$numero . '.pdf';
-
-        // Inicializar el cliente API de Boleta
-        self::$Boleta = new Boleta(self::$token, self::$url);
+        self::$verbose = env('TEST_VERBOSE', false);
+        self::$client = new ApiClient();
+        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
+        self::$numero_bhe = env('TEST_PDF_NUMEROBHE', '0');
+        self::$archivo_pdf = self::$emisor_rut . '_bhe_' . self::$numero_bhe . '.pdf';
     }
 
-    public function testObtenerYPdfBoleta()
+    public function test_boleta_pdf()
     {
+        $url = '/bhe/pdf/'.self::$numero_bhe;
+
         try {
-            $pdf = self::$Boleta->pdf(self::$rut, self::$numero);
+            $pdf = self::$client->get($url);
             $this->assertNotEmpty($pdf, 'El contenido del PDF no debe estar vacío');
 
             // Intentar guardar el PDF en el sistema de archivos y verificar si el archivo existe
-            file_put_contents(self::$archivoPdf, $pdf);
-            $this->assertFileExists(self::$archivoPdf, 'El archivo PDF debe existir en el sistema de archivos');
+            file_put_contents(self::$archivo_pdf, $pdf->getBody());
+            $this->assertFileExists(self::$archivo_pdf, 'El archivo PDF debe existir en el sistema de archivos');
 
+            if (self::$verbose) {
+                echo "\n",'test_boleta_pdf() pdf ',' Se ha generado exitosamente un PDF. ',"\n";
+            }
         } catch (ApiException $e) {
             $this->fail(sprintf('[ApiException %d] %s', $e->getCode(), $e->getMessage()));
-        } finally {
-            // Limpiar: eliminar el archivo PDF después de la prueba para no dejar residuos
-            if (file_exists(self::$archivoPdf)) {
-                unlink(self::$archivoPdf);
-            }
         }
     }
 }
+
+?>
