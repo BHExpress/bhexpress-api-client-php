@@ -210,6 +210,7 @@ class ApiClient
         }
 
         $headers = $this->getLastResponse()->getHeaders();
+        
         foreach ($headers as &$header) {
             $header = isset($header[1]) ? $header : $header[0];
         }

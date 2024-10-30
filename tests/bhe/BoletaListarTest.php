@@ -28,14 +28,12 @@ class BoletaListarTest extends TestCase
 
     protected static $verbose;
     protected static $client;
-    protected static $emisor_rut;
     protected static $periodo;
 
     public static function setUpBeforeClass(): void
     {
         self::$verbose = env('TEST_VERBOSE', false);
         self::$client = new ApiClient();
-        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
         self::$periodo = env('TEST_LISTAR_PERIODO', date('Ym'));
     }
 
@@ -55,5 +53,3 @@ class BoletaListarTest extends TestCase
         }
     }
 }
-
-?>

@@ -1,6 +1,10 @@
-vendor
+vendor/
 test.env
 .phpunit.result.cache
-composer
 Dockerfile
-docs
+
+var/
+tools/
+build/
+
+prueba-ejemplo.php

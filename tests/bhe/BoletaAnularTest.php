@@ -59,5 +59,3 @@ class BoletaAnularTest extends TestCase
         }
     }
 }
-
-?>

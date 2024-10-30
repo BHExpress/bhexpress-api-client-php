@@ -119,5 +119,3 @@ class BoletaEmitirTest extends TestCase
         }
     }
 }
-
-?>

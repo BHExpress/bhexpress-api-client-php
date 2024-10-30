@@ -62,5 +62,3 @@ class BoletaEmailTest extends TestCase
         }
     }
 }
-
-?>
