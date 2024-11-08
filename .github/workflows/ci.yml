@@ -32,9 +32,9 @@ jobs:
           echo "BHEXPRESS_API_TOKEN=${{ secrets.BHEXPRESS_API_TOKEN }}" >> tests/test.env
           echo 'BHEXPRESS_EMISOR_RUT="76192083-9"' >> tests/test.env
       
-      - name: Run PHP tests
+      - name: Run PHP tests read only
         run: |
-          composer tests
+          composer tests_readonly
 
       - name: Upload PHPUnit result report
         if: failure()
