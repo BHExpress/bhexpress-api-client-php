@@ -36,7 +36,7 @@ class BoletaEmitirTest extends TestCase
         self::$verbose = env('TEST_VERBOSE', false);
         self::$client = new ApiClient();
         self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$fecha_emis = env('TEST_EMITIR_FECHAEMIS', date('Y-m-d'));
+        self::$fecha_emis = env('TEST_FECHAEMIS', date('Y-m-d'));
     }
 
     public function test_boleta_emitir()

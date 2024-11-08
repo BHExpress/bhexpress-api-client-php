@@ -34,7 +34,7 @@ class BoletaListarTest extends TestCase
     {
         self::$verbose = env('TEST_VERBOSE', false);
         self::$client = new ApiClient();
-        self::$periodo = env('TEST_LISTAR_PERIODO', date('Ym'));
+        self::$periodo = env('TEST_PERIODO', date('Ym'));
     }
 
     public function test_boleta_listar()

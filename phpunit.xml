@@ -1,7 +1,40 @@
-<phpunit bootstrap="tests/bootstrap.php" colors="true" verbose="true">
+<phpunit
+    backupGlobals="true"
+    bootstrap="tests/bootstrap.php"
+    cacheDirectory="var/cache/phpunit"
+    processIsolation="true"
+    executionOrder="depends,defects"
+    colors="true"
+    testdox="true"
+    verbose="true"
+    requireCoverageMetadata="true"
+    beStrictAboutCoverageMetadata="true"
+    beStrictAboutOutputDuringTests="false"
+    beStrictAboutChangesToGlobalState="true"
+    stopOnError="true"
+    stopOnFailure="true"
+    stopOnWarning="true"
+    stopOnDeprecation="true"
+    stopOnNotice="true"
+    failOnEmptyTestSuite="true"
+    failOnWarning="true"
+    failOnRisky="true"
+    failOnDeprecation="true"
+    failOnPhpunitDeprecation="true"
+    failOnNotice="true"
+>
     <testsuites>
-        <testsuite name="API BHExpress: Cliente de API en PHP - Pruebas Unitarias.">
+        <testsuite name="BHExpress: Cliente de API en PHP - Pruebas Unitarias.">
             <directory>tests</directory>
+        </testsuite>
+        <testsuite name="readonly">
+            <file>tests/bhe/BoletaListarTest.php</file>
+            <file>tests/bhe/BoletaPdfTest.php</file>
+        </testsuite>
+        <testsuite name="authneeded">
+            <file>tests/bhe/BoletaEmitirTest.php</file>
+            <file>tests/bhe/BoletaEmailTest.php</file>
+            <file>tests/bhe/BoletaAnularTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
@@ -9,4 +42,10 @@
             <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
+    <php>
+        <ini name="memory_limit" value="-1" />
+        <env name="BHEXPRESS_API_URL" value="https://apigateway.cl" />
+        <env name="BHEXPRESS_EMISOR_RUT" value="76192083-9" />
+        <env name="TEST_PERIODO" value="202407" />
+    </php>
 </phpunit>

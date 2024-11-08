@@ -30,25 +30,41 @@ class BoletaEmailTest extends TestCase
     protected static $client;
     protected static $emisor_rut;
     protected static $email;
-    protected static $numero_bhe;
 
     public static function setUpBeforeClass(): void
     {
         self::$verbose = env('TEST_VERBOSE', false);
         self::$client = new ApiClient();
         self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$email = env('TEST_EMAIL_CORREO', '');
-        self::$numero_bhe = env('TEST_EMAIL_NUMEROBHE', '0');
+        self::$email = env('TEST_CORREO', '');
+    }
+
+    private function _buscar(): Psr\Http\Message\MessageInterface
+    {
+        $fecha_desde = '2015-12-31';
+        $fecha_hasta = date('Y-m-d');
+        $url = '/bhe/boletas?fecha_desde='.$fecha_desde.'&fecha_hasta='.$fecha_hasta; # Buscar algo similar a urlencode
+        try {
+            $response = self::$client->get($url);
+
+        } catch (ApiException $e) {
+            throw new ApiException (sprintf('[ApiException %d] %s', $e->getCode(), $e->getMessage()));
+        }
+        return $response;
     }
 
     public function test_boleta_email()
     {
+        $response_body = $this->_buscar();
+        $body_dec = json_decode($response_body->getBody()->getContents(), true);
+        $numero_bhe = $body_dec['results'][0]['numero'];
+        $url = '/bhe/email/'.$numero_bhe;
+
         $destinatario = [
             'destinatario' => [
                 'email' => self::$email
             ]
         ];
-        $url = '/bhe/email/'.self::$numero_bhe;
 
         try {
             $response = self::$client->post($url, $destinatario);

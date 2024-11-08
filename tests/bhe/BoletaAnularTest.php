@@ -37,7 +37,7 @@ class BoletaAnularTest extends TestCase
         self::$verbose = env('TEST_VERBOSE', false);
         self::$client = new ApiClient();
         self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$numero_bhe = env('TEST_EMAIL_NUMEROBHE', '0');
+        self::$numero_bhe = env('TEST_NUMEROBHE', '0');
         self::$causa = 3;
     }
 
