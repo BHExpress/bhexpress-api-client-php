@@ -4,6 +4,7 @@ BHExpress: Cliente de API en PHP
 [![Total Downloads](https://poser.pugx.org/bhexpress/bhexpress-api-client/downloads)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
 [![Monthly Downloads](https://poser.pugx.org/bhexpress/bhexpress-api-client/d/monthly)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
 [![License](https://poser.pugx.org/bhexpress/bhexpress-api-client/license)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php?ref=badge_shield)
 
 Cliente para realizar la integración con los servicios web de [BHExpress](https://www.bhexpress.cl) desde PHP.
 
@@ -30,3 +31,7 @@ Enlaces
 - [Sitio web BHExpress](https://www.bhexpress.cl).
 - [Código fuente en GitHub](https://github.com/BHExpress/bhexpress-api-client-php).
 - [Paquete en Packagist](https://packagist.org/packages/bhexpress/bhexpress-api-client).
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php?ref=badge_large)
