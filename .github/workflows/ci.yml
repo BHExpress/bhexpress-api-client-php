@@ -30,7 +30,7 @@ jobs:
       - name: Create temporary env file
         run: |
           echo "BHEXPRESS_API_TOKEN=${{ secrets.BHEXPRESS_API_TOKEN }}" >> tests/test.env
-          echo 'BHEXPRESS_EMISOR_RUT="76192083-9"' >> tests/test.env
+          echo "BHEXPRESS_EMISOR_RUT=${{ secrets.BHEXPRESS_EMISOR_RUT }}" >> tests/test.env
       
       - name: Run PHP tests read only
         run: |

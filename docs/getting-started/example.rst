@@ -1,7 +1,12 @@
 Ejemplo
 =======
 
-El siguiente es un ejemplo básico de cómo obtener un listado de documentos BHE utilizando el cliente de API.
+Para utilizar el cliente de API de BHExpress, deberás tener definido el token de API y el RUT del emisor como variables de entorno. 
+
+.. seealso::
+    Para más información sobre este paso, referirse al la guía en Configuración.
+
+El siguiente es un ejemplo básico de cómo emitir una BHE utilizando el cliente de API.
 
 .. code-block:: php
     <?php
@@ -12,59 +17,87 @@ El siguiente es un ejemplo básico de cómo obtener un listado de documentos BHE
     # Importaciones del cliente de API de BHExpress
     use bhexpress\api_client\ApiClient;
 
-    # Instanciación de cliente de API
+    # Instancia de cliente.
     $client = new ApiClient();
+    # RUT del emisor.
+    $emisor_rut = "12345678-9";
+    # Fecha de emisión de BHE.
+    $fecha_emis = date('Y-m-d');
+    # Recurso a consumir.
+    $url = '/bhe/emitir';
 
-    # Periodo de búsqueda de BHEs
-    $periodo = '202407';
-    # Recurso a consumir
-    $url = '/bhe/boletas?periodo='.$periodo;
+    # Datos de la boleta a ser emitida.
+    $datos_boleta = [
+        'Encabezado' => [
+            'IdDoc' => [
+                'FchEmis' => $fecha_emis,
+                'TipoRetencion' => 1,
+            ],
+            'Emisor' => [
+                'RUTEmisor' => $emisor_rut
+            ],
+            'Receptor' => [
+                'RUTRecep' => '66666666-6',
+                'RznSocRecep' => 'Receptor generico',
+                'DirRecep' => 'Santa Cruz',
+                'CmnaRecep' => 'Santa Cruz'
+            ]
+        ],
+        'Detalle' => [
+            [
+                'NmbItem' => 'Item con monto final solamente (lo básico en SII)',
+                'MontoItem' => 100
+            ],
+            [
+                'CdgItem' => 'CASO2',
+                'NmbItem' => 'Se agrega código al item',
+                'MontoItem' => 300
+            ],
+            [
+                'NmbItem' => 'Se agrega cantidad al item (se indica precio unitario)',
+                'QtyItem' => 1,
+                'PrcItem' => 120
+            ],
+            [
+                'NmbItem' => 'Se agrega cantidad al item (se indica precio unitario)',
+                'QtyItem' => 0.5,
+                'PrcItem' => 120
+            ],
+            [
+                'CdgItem' => 'CASO2',
+                'NmbItem' => 'Se agrega código y cantidad al item (se indica precio unitario)',
+                'QtyItem' => 2,
+                'PrcItem' => 250
+            ],
+            [
+                'CdgItem' => 'COMPLETO',
+                'NmbItem' => 'Caso más completo, con código, cantidad, precio unitario y descuento en porcentaje',
+                'QtyItem' => 10,
+                'PrcItem' => 75,
+                'DescuentoPct' => 10
+            ],
+            [
+                'CdgItem' => 'COMPLETO',
+                'NmbItem' => 'Caso más completo, con codigo, cantidad, precio unitario y descuento en monto fijo',
+                'QtyItem' => 10,
+                'PrcItem' => 75,
+                'DescuentoMonto' => 50
+            ],
+            [
+                'NmbItem' => 'En este caso el MontoItem es descartado por que va cantidad y precio unitario',
+                'QtyItem' => 2,
+                'PrcItem' => 10,
+                'MontoItem' => 100
+            ]
+        ]
+    ];
 
-    # Respuesta de la solicitud HTTP
-    $response = $client->get($url);
+    # Respuesta de solicitud HTTP (POST) de emisión de boleta.
+    $response = $client->post($url, $datos_boleta);
 
-    # Impresión de código de estado y BHE pertenecientes al periodo.
+    # Despliegue del resultado.
     echo "\n", $response->getStatusCode();
-    echo "\nLISTA BOLETAS: \n";
-    echo "\n",$response->getBody(),"\n";
-
-Desgloce de ejemplo
--------------------
-
-Para utilizar el cliente de API de BHExpress, deberás tener definido el token de API y el RUT del emisor como variables de entorno. 
-
-.. seealso::
-    Para más información sobre este paso, referirse al la guía en Configuración.
-
-Al momento de integrar el cliente de API con tu programa, debes importar el cliente e instanciarlo.
-
-.. code-block:: php
-    # Importaciones del cliente de API de BHExpress
-    use bhexpress\api_client\ApiClient;
-
-    # Instanciación de cliente de API
-    $client = new ApiClient();
-
-Luego, se definen los parámetros a utilizar.
-
-.. code-block:: php
-    # Periodo de búsqueda de BHEs
-    $periodo = '202407';
-    # Recurso a consumir
-    $url = '/bhe/boletas?periodo='.$periodo;
-
-Más adelante, se ejecuta la solicitud HTTP y se guarda en una variable llamada ``$response``. Response contiene la información de la respuesta HTTP, desde el código de estado, hasta las cabeceras y el cuerpo (si es que tiene).
-
-.. code-block:: php
-    # Respuesta de la solicitud HTTP
-    $response = $client->get($url);
-
-Y al final de todo, se despliega el cuerpo de la respuesta en consola, junto con su código de estado.
-
-.. code-block:: php
-    # Impresión de código de estado y BHE pertenecientes al periodo.
-    echo "\n", $response->getStatusCode();
-    echo "\nLISTA BOLETAS: \n";
+    echo "\nEMISION BOLETA: \n";
     echo "\n",$response->getBody(),"\n";
 
 .. seealso::

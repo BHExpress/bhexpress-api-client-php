@@ -12,6 +12,8 @@ BHExpress: Cliente de API en PHP
 
 Cliente para realizar la integración con los servicios web de [BHExpress](https://www.bhexpress.cl) desde PHP.
 
+Revisa la [documentación](https://api-client-php.docs.bhexpress.cl/guide/index.html) de la biblioteca para más información, sus características y detalles de su uso.
+
 Licencia
 --------
 
