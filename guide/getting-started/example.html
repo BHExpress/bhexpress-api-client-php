@@ -135,36 +135,6 @@
             <h1>Ejemplo</h1>
 
             
-    <p>El siguiente es un ejemplo básico de cómo obtener un listado de documentos BHE utilizando el cliente de API.</p>
-
-            <pre><code class="language-php">&lt;?php
-
-# Definición de directorio autoload. Necesario si se usa la versión de GitHub.
-require_once __DIR__ . &#039;/vendor/autoload.php&#039;;
-
-# Importaciones del cliente de API de BHExpress
-use bhexpress\api_client\ApiClient;
-
-# Instanciación de cliente de API
-$client = new ApiClient();
-
-# Periodo de búsqueda de BHEs
-$periodo = &#039;202407&#039;;
-# Recurso a consumir
-$url = &#039;/bhe/boletas?periodo=&#039;.$periodo;
-
-# Respuesta de la solicitud HTTP
-$response = $client-&gt;get($url);
-
-# Impresión de código de estado y BHE pertenecientes al periodo.
-echo &quot;\n&quot;, $response-&gt;getStatusCode();
-echo &quot;\nLISTA BOLETAS: \n&quot;;
-echo &quot;\n&quot;,$response-&gt;getBody(),&quot;\n&quot;;</code></pre>
-
-            <section class="section " id="desgloce-de-ejemplo">
-            <h2>Desgloce de ejemplo</h2>
-
-            
     <p>Para utilizar el cliente de API de BHExpress, deberás tener definido el token de API y el RUT del emisor como variables de entorno.</p>
 
             <div class="phpdocumentor-admonition seealso">
@@ -177,35 +147,97 @@ echo &quot;\n&quot;,$response-&gt;getBody(),&quot;\n&quot;;</code></pre>
 </div>
 
             
-    <p>Al momento de integrar el cliente de API con tu programa, debes importar el cliente e instanciarlo.</p>
+    <p>El siguiente es un ejemplo básico de cómo emitir una BHE utilizando el cliente de API.</p>
 
-            <pre><code class="language-php"># Importaciones del cliente de API de BHExpress
+            <pre><code class="language-php">&lt;?php
+
+# Definición de directorio autoload. Necesario si se usa la versión de GitHub.
+require_once __DIR__ . &#039;/vendor/autoload.php&#039;;
+
+# Importaciones del cliente de API de BHExpress
 use bhexpress\api_client\ApiClient;
 
-# Instanciación de cliente de API
-$client = new ApiClient();</code></pre>
+# Instancia de cliente.
+$client = new ApiClient();
+# RUT del emisor.
+$emisor_rut = &quot;12345678-9&quot;;
+# Fecha de emisión de BHE.
+$fecha_emis = date(&#039;Y-m-d&#039;);
+# Recurso a consumir.
+$url = &#039;/bhe/emitir&#039;;
 
-            
-    <p>Luego, se definen los parámetros a utilizar.</p>
+# Datos de la boleta a ser emitida.
+$datos_boleta = [
+    &#039;Encabezado&#039; =&gt; [
+        &#039;IdDoc&#039; =&gt; [
+            &#039;FchEmis&#039; =&gt; $fecha_emis,
+            &#039;TipoRetencion&#039; =&gt; 1,
+        ],
+        &#039;Emisor&#039; =&gt; [
+            &#039;RUTEmisor&#039; =&gt; $emisor_rut
+        ],
+        &#039;Receptor&#039; =&gt; [
+            &#039;RUTRecep&#039; =&gt; &#039;66666666-6&#039;,
+            &#039;RznSocRecep&#039; =&gt; &#039;Receptor generico&#039;,
+            &#039;DirRecep&#039; =&gt; &#039;Santa Cruz&#039;,
+            &#039;CmnaRecep&#039; =&gt; &#039;Santa Cruz&#039;
+        ]
+    ],
+    &#039;Detalle&#039; =&gt; [
+        [
+            &#039;NmbItem&#039; =&gt; &#039;Item con monto final solamente (lo básico en SII)&#039;,
+            &#039;MontoItem&#039; =&gt; 100
+        ],
+        [
+            &#039;CdgItem&#039; =&gt; &#039;CASO2&#039;,
+            &#039;NmbItem&#039; =&gt; &#039;Se agrega código al item&#039;,
+            &#039;MontoItem&#039; =&gt; 300
+        ],
+        [
+            &#039;NmbItem&#039; =&gt; &#039;Se agrega cantidad al item (se indica precio unitario)&#039;,
+            &#039;QtyItem&#039; =&gt; 1,
+            &#039;PrcItem&#039; =&gt; 120
+        ],
+        [
+            &#039;NmbItem&#039; =&gt; &#039;Se agrega cantidad al item (se indica precio unitario)&#039;,
+            &#039;QtyItem&#039; =&gt; 0.5,
+            &#039;PrcItem&#039; =&gt; 120
+        ],
+        [
+            &#039;CdgItem&#039; =&gt; &#039;CASO2&#039;,
+            &#039;NmbItem&#039; =&gt; &#039;Se agrega código y cantidad al item (se indica precio unitario)&#039;,
+            &#039;QtyItem&#039; =&gt; 2,
+            &#039;PrcItem&#039; =&gt; 250
+        ],
+        [
+            &#039;CdgItem&#039; =&gt; &#039;COMPLETO&#039;,
+            &#039;NmbItem&#039; =&gt; &#039;Caso más completo, con código, cantidad, precio unitario y descuento en porcentaje&#039;,
+            &#039;QtyItem&#039; =&gt; 10,
+            &#039;PrcItem&#039; =&gt; 75,
+            &#039;DescuentoPct&#039; =&gt; 10
+        ],
+        [
+            &#039;CdgItem&#039; =&gt; &#039;COMPLETO&#039;,
+            &#039;NmbItem&#039; =&gt; &#039;Caso más completo, con codigo, cantidad, precio unitario y descuento en monto fijo&#039;,
+            &#039;QtyItem&#039; =&gt; 10,
+            &#039;PrcItem&#039; =&gt; 75,
+            &#039;DescuentoMonto&#039; =&gt; 50
+        ],
+        [
+            &#039;NmbItem&#039; =&gt; &#039;En este caso el MontoItem es descartado por que va cantidad y precio unitario&#039;,
+            &#039;QtyItem&#039; =&gt; 2,
+            &#039;PrcItem&#039; =&gt; 10,
+            &#039;MontoItem&#039; =&gt; 100
+        ]
+    ]
+];
 
-            <pre><code class="language-php"># Periodo de búsqueda de BHEs
-$periodo = &#039;202407&#039;;
-# Recurso a consumir
-$url = &#039;/bhe/boletas?periodo=&#039;.$periodo;</code></pre>
+# Respuesta de solicitud HTTP (POST) de emisión de boleta.
+$response = $client-&gt;post($url, $datos_boleta);
 
-            
-    <p>Más adelante, se ejecuta la solicitud HTTP y se guarda en una variable llamada <code>$response</code>
-. Response contiene la información de la respuesta HTTP, desde el código de estado, hasta las cabeceras y el cuerpo (si es que tiene).</p>
-
-            <pre><code class="language-php"># Respuesta de la solicitud HTTP
-$response = $client-&gt;get($url);</code></pre>
-
-            
-    <p>Y al final de todo, se despliega el cuerpo de la respuesta en consola, junto con su código de estado.</p>
-
-            <pre><code class="language-php"># Impresión de código de estado y BHE pertenecientes al periodo.
+# Despliegue del resultado.
 echo &quot;\n&quot;, $response-&gt;getStatusCode();
-echo &quot;\nLISTA BOLETAS: \n&quot;;
+echo &quot;\nEMISION BOLETA: \n&quot;;
 echo &quot;\n&quot;,$response-&gt;getBody(),&quot;\n&quot;;</code></pre>
 
             <div class="phpdocumentor-admonition seealso">
@@ -216,8 +248,6 @@ echo &quot;\n&quot;,$response-&gt;getBody(),&quot;\n&quot;;</code></pre>
 
     </article>
 </div>
-
-    </section>
 
     </section>
 
