@@ -11,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        php-version: ['7.3', '8.0']  # Puedes cambiar las versiones según necesites
+        php-version: ['8.2', '8.3']  # Puedes cambiar las versiones según necesites
 
     steps:
       - name: Check out repository code
@@ -31,7 +31,7 @@ jobs:
         run: |
           echo "BHEXPRESS_API_TOKEN=${{ secrets.BHEXPRESS_API_TOKEN }}" >> tests/test.env
           echo "BHEXPRESS_EMISOR_RUT=${{ secrets.BHEXPRESS_EMISOR_RUT }}" >> tests/test.env
-      
+
       - name: Run PHP tests read only
         run: |
           composer tests_readonly
