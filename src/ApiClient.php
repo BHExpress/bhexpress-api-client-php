@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BHExpress
  * Copyright (C) SASCO SpA (https://sasco.cl)
@@ -58,7 +60,7 @@ class ApiClient
 
     /**
      * El RUT de emisor de las BHE.
-     * 
+     *
      * @var string|null
      */
     private $rut_emisor = null;
@@ -84,8 +86,11 @@ class ApiClient
      * @param string|null $rut RUT del emisor de las BHE. # NUEVA LINEA
      * @param string|null $url URL base de la API.
      */
-    public function __construct($token = null, $rut= null, $url = null)
-    {
+    public function __construct(
+        string $token = null,
+        string $rut = null,
+        string $url = null
+    ) {
         $this->api_token = $token ?: $this->env('BHEXPRESS_API_TOKEN');
         if (!$this->api_token) {
             throw new ApiException('BHEXPRESS_API_TOKEN missing');
@@ -95,7 +100,9 @@ class ApiClient
             throw new ApiException('BHEXPRESS_EMISOR_RUT missing');
         }
 
-        $this->api_url = $url ?: $this->env('BHEXPRESS_API_URL') ?: $this->api_url;
+        $this->api_url = $url ?: $this->env(
+            'BHEXPRESS_API_URL'
+        ) ?: $this->api_url;
     }
 
     /**
@@ -104,7 +111,7 @@ class ApiClient
      * @param string $url URL base.
      * @return $this
      */
-    public function setUrl($url)
+    public function setUrl(string $url)
     {
         $this->api_url = $url;
         return $this;
@@ -116,7 +123,7 @@ class ApiClient
      * @param string $token Token de autenticación.
      * @return $this
      */
-    public function setToken($token)
+    public function setToken(string $token)
     {
         $this->api_token = $token;
         return $this;
@@ -124,11 +131,11 @@ class ApiClient
 
     /**
      * Establece el RUT del emisor.
-     * 
+     *
      * @param string $rut RUT del emisor.
      * @return $this
      */
-    public function setRut($rut) # NUEVO MÉTODO
+    public function setRut(string $rut) # NUEVO MÉTODO
     {
         $this->rut_emisor = $rut;
         return $this;
@@ -166,7 +173,9 @@ class ApiClient
     public function getBody()
     {
         if (!$this->last_response) {
-            throw new ApiException('No hay una respuesta HTTP previa para obtener el cuerpo.');
+            throw new ApiException(
+                'No hay una respuesta HTTP previa para obtener el cuerpo.'
+            );
         }
 
         return (string)$this->last_response->getBody();
@@ -187,7 +196,12 @@ class ApiClient
         $decodedBody = json_decode($this->getBody(), true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new ApiException('Error al decodificar JSON: ' . json_last_error_msg());
+            throw new ApiException(
+                sprintf(
+                    'Error al decodificar JSON: %s',
+                    json_last_error_msg()
+                )
+            );
         }
 
         return $decodedBody;
@@ -206,11 +220,13 @@ class ApiClient
     public function toArray()
     {
         if (!$this->last_response) {
-            throw new ApiException('No hay una respuesta HTTP previa para procesar.');
+            throw new ApiException(
+                'No hay una respuesta HTTP previa para procesar.'
+            );
         }
 
         $headers = $this->getLastResponse()->getHeaders();
-        
+
         foreach ($headers as &$header) {
             $header = isset($header[1]) ? $header : $header[0];
         }
@@ -237,7 +253,10 @@ class ApiClient
             } elseif (!empty($body['exception'])) {
                 $body = $this->getError()->message;
             } else {
-                $body = 'Error no determinado: ' . json_encode($body);
+                $body = sprintf(
+                    'Error no determinado: %s',
+                    json_encode($body)
+                );
             }
         }
 
@@ -260,13 +279,22 @@ class ApiClient
      * @param array $options Arreglo con las opciones de la solicitud HTTP.
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function get($resource, array $headers = [], array $options = [])
-    {
-        return $this->consume($resource, [], $headers, 'GET', $options)->getLastResponse();
+    public function get(
+        string $resource,
+        array $headers = [],
+        array $options = []
+    ) {
+        return $this->consume(
+            $resource,
+            [],
+            $headers,
+            'GET',
+            $options
+        )->getLastResponse();
     }
 
     /**
-     * Realiza una solicitud POST a la API. 
+     * Realiza una solicitud POST a la API.
      *
      * @param string $resource Recurso de la API al cual realizar la solicitud.
      * @param array $data Datos a enviar en la solicitud.
@@ -274,9 +302,19 @@ class ApiClient
      * @param array $options Arreglo con las opciones de la solicitud HTTP.
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function post($resource, array $data, array $headers = [], array $options = [])
-    {
-        return $this->consume($resource, $data, $headers, 'POST', $options)->getLastResponse();
+    public function post(
+        string $resource,
+        array $data,
+        array $headers = [],
+        array $options = []
+    ) {
+        return $this->consume(
+            $resource,
+            $data,
+            $headers,
+            'POST',
+            $options
+        )->getLastResponse();
     }
 
     /**
@@ -288,9 +326,19 @@ class ApiClient
      * @param array $options Arreglo con las opciones de la solicitud HTTP.
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function put($resource, array $data, array $headers = [], array $options = [])
-    {
-        return $this->consume($resource, $data, $headers, 'PUT', $options)->getLastResponse();
+    public function put(
+        string $resource,
+        array $data,
+        array $headers = [],
+        array $options = []
+    ) {
+        return $this->consume(
+            $resource,
+            $data,
+            $headers,
+            'PUT',
+            $options
+        )->getLastResponse();
     }
 
     /**
@@ -301,9 +349,18 @@ class ApiClient
      * @param array $options Arreglo con las opciones de la solicitud HTTP.
      * @return \Psr\Http\Message\ResponseInterface|null
      */
-    public function delete($resource, array $headers = [], array $options = [])
-    {
-        return $this->consume($resource, [], $headers, 'DELETE', $options)->getLastResponse();
+    public function delete(
+        string $resource,
+        array $headers = [],
+        array $options = []
+    ) {
+        return $this->consume(
+            $resource,
+            [],
+            $headers,
+            'DELETE',
+            $options
+        )->getLastResponse();
     }
 
     /**
@@ -320,22 +377,34 @@ class ApiClient
      * @return $this Instancia actual del cliente para encadenar llamadas.
      * @throws ApiException Si se produce un error en la solicitud.
      */
-    public function consume($resource, $data = [], array $headers = [], $method = null, $options = [])
-    {
+    public function consume(
+        string $resource,
+        array $data = [],
+        array $headers = [],
+        string $method = null,
+        array $options = []
+    ) {
         $this->last_response = null;
         if (!$this->api_token) {
-            throw new ApiException('Falta especificar token para autenticación.', 400);
+            throw new ApiException(
+                'Falta especificar token para autenticación.',
+                400
+            );
         }
         if (!$this->rut_emisor) {
-            throw new ApiException('Falta especificar RUT del emisor.', 400); # NUEVA CONDICIONAL
+            throw new ApiException(
+                'Falta especificar RUT del emisor.',
+                400
+            )
+            ; # NUEVA CONDICIONAL
         }
         $method = $method ?: ($data ? 'POST' : 'GET');
         $client = new \GuzzleHttp\Client();
         $this->last_url = $this->api_url.$this->api_prefix.$this->api_version.$resource;
-        
+
         // preparar cabeceras que se usarán
         $options[\GuzzleHttp\RequestOptions::HEADERS] = array_merge([
-            'Authorization' => 'Token ' . $this->api_token,
+            'Authorization' => sprintf('Token %s', $this->api_token),
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
             'X-Bhexpress-Emisor' => $this->rut_emisor, # NUEVA LINEA
@@ -345,10 +414,14 @@ class ApiClient
         if ($data) {
             $options[\GuzzleHttp\RequestOptions::JSON] = $data;
         }
-        
+
         // realizar consulta HTTP
         try {
-            $this->last_response = $client->request($method, $this->last_url, $options);
+            $this->last_response = $client->request(
+                $method,
+                $this->last_url,
+                $options
+            );
         } catch (\GuzzleHttp\Exception\GuzzleException $e) {
             $this->last_response = $e->getResponse();
             $this->throwException();
@@ -385,7 +458,11 @@ class ApiClient
 
         // Se maneja el caso donde no se encuentra un mensaje de error específico
         if (!$message || $message === '') {
-            $message = '[BHExpress API] Código HTTP ' . $code . ': ' . $reasonPhrase;
+            $message = sprintf(
+                '[BHExpress API] Código HTTP %d: %s',
+                $code,
+                $reasonPhrase
+            );
         }
 
         return (object)[
@@ -416,7 +493,7 @@ class ApiClient
      * @param string $name Nombre de la variable de entorno.
      * @return string|null Valor de la variable de entorno o null si no está definida.
      */
-    private function env($name)
+    private function env(string $name)
     {
         return function_exists('env') ? env($name) : getenv($name);
     }

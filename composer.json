@@ -16,22 +16,32 @@
         "source": "https://github.com/BHExpress/bhexpress-api-client-php"
     },
     "require": {
-        "php": "^8.2",
-        "guzzlehttp/guzzle": "^7"
+        "guzzlehttp/guzzle": "^7",
+        "php": "^8.2 || ^8.3"
     },
     "require-dev": {
-        "ext-xdebug": "*",
         "friendsofphp/php-cs-fixer": "^3.63",
         "phpstan/phpstan": "^1.12",
-        "phpunit/phpunit": "^11.4"
+        "phpunit/phpunit": "^11.3",
+        "vlucas/phpdotenv": "^5.6"
     },
     "autoload": {
-        "psr-4": {"bhexpress\\api_client\\": "src/"}
+        "psr-4": {
+            "bhexpress\\api_client\\": "src/",
+            "bhexpress\\api_client\\bhe\\": "src/bhe/",
+            "bhexpress\\tests\\bhe\\": "tests/bhe/boletas/"
+        }
     },
     "scripts": {
         "docs": "php tools/phpdocumentor run --config=phpdoc.xml",
         "tests": "XDEBUG_MODE=coverage vendor/bin/phpunit --configuration=phpunit.xml",
-        "tests_readonly": "vendor/bin/phpunit --configuration=phpunit.xml --no-coverage --testsuite readonly",
-        "tests_authneeded": "vendor/bin/phpunit --configuration=phpunit.xml --no-coverage --testsuite authneeded"
+        "tests-boletas": "vendor/bin/phpunit --configuration=phpunit.xml --no-coverage --testsuite boletas",
+        "tests-servicios": "vendor/bin/phpunit --configuration=phpunit.xml --no-coverage --testsuite servicios",
+        "tests-receptores": "vendor/bin/phpunit --configuration=phpunit.xml --no-coverage --testsuite receptores",
+        "tests-readonly": "XDEBUG_MODE=coverage vendor/bin/phpunit --configuration=phpunit.xml --filter 'testCalcularMontoBruto|testCalcularMontoLiquido|testListarBhes|testListarReceptores|testListarServicios'",
+        "phpcs-fix": "php-cs-fixer fix -v --config=php-cs-fixer.php .",
+        "phpcs-fix-dry-run": "php-cs-fixer fix -v --dry-run --diff --config=php-cs-fixer.php .",
+        "phpstan": "phpstan analyse --configuration=phpstan.neon --memory-limit=1G",
+        "phpstan-export": "phpstan analyse --configuration=phpstan.neon --level 9 --generate-baseline"
     }
 }

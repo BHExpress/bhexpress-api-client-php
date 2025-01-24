@@ -27,21 +27,25 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest
 
-      - name: Create temporary env file
-        run: |
-          echo "BHEXPRESS_API_TOKEN=${{ secrets.BHEXPRESS_API_TOKEN }}" >> tests/test.env
-          echo "BHEXPRESS_EMISOR_RUT=${{ secrets.BHEXPRESS_EMISOR_RUT }}" >> tests/test.env
-
       - name: Run PHP tests read only
+        env:
+          BHEXPRESS_API_TOKEN: ${{ secrets.BHEXPRESS_API_TOKEN }}
+          BHEXPRESS_EMISOR_RUT: ${{ vars.BHEXPRESS_EMISOR_RUT }}
         run: |
-          composer tests_readonly
+          composer tests-readonly
 
-      - name: Upload PHPUnit result report
+      - name: Upload pytest result report
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: tests-testdox-php_${{ matrix.php-version }}.txt
-          path: var/tests-testdox.txt
+          name: tests-results-python_${{ matrix.python-version }}.xml
+          path: var/tests-results.xml
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-coverage-python_${{ matrix.python-version }}.xml
+          path: var/tests-coverage.xml
 
       - name: Display PHP version
         run: php -v

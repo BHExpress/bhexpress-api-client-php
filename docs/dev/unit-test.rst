@@ -11,6 +11,7 @@ Antes de empezar, debes configurar las siguientes variables de entorno:
 .. code-block:: shell
     BHEXPRESS_API_URL="https://bhexpress.cl"
     BHEXPRESS_API_TOKEN="token-bhexpress"
+    BHEXPRESS_EMISOR_RUT="12345678-9"
 
 Para ejecutar las pruebas unitarias se necesita tener instaladas las dependencias de composer, y para hacer todas las pruebas, ejecutar lo siguiente:
 
@@ -20,4 +21,9 @@ Para ejecutar las pruebas unitarias se necesita tener instaladas las dependencia
 También es posible ejecutar una pruebas específica indicando el test. Ejemplo:
 
 .. code-block:: shell
-    ./vendor/bin/phpunit --filter test_boleta_listar
+    ./vendor/bin/phpunit --filter testListarBhes --no-coverage
+
+Alternativamente, se puede ejecutar un "testsuite", o conjunto de tests (solo válido desde la versión de GitHub, o si has definido testsuites previamente):
+
+.. code-block:: shell
+    ./vendor/bin/phpunit --no-coverage --testsuite servicios

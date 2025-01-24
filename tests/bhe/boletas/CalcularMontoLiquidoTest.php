@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BHExpress
  * Copyright (C) SASCO SpA (https://sasco.cl)
@@ -19,43 +21,52 @@
  * <http://www.gnu.org/licenses/lgpl.html>.
  */
 
-use PHPUnit\Framework\TestCase;
-use bhexpress\api_client\ApiClient;
 use bhexpress\api_client\ApiException;
+use bhexpress\api_client\bhe\Bhe;
+use bhexpress\tests\bhe\AbstractBoletas;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-class BoletaAnularTest extends TestCase
+#[CoversClass(Bhe::class)]
+class CalcularMontoLiquidoTest extends AbstractBoletas
 {
-
+    /**
+     * Variable que permite desplegar en consola los resultados.
+     *
+     * @var bool
+     */
     protected static $verbose;
-    protected static $client;
-    protected static $emisor_rut;
-    protected static $numero_bhe;
-    protected static $causa;
 
     public static function setUpBeforeClass(): void
     {
         self::$verbose = env('TEST_VERBOSE', false);
-        self::$client = new ApiClient();
-        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$numero_bhe = env('TEST_NUMEROBHE', '0');
-        self::$causa = 3;
+        self::$client = new Bhe();
     }
 
-    public function test_boleta_anular()
+    /**
+     * Método de test que prueba el recurso de calcular un monto líquido a partir
+     * de un monto bruto y un periodo específico.
+     * @throws \bhexpress\api_client\ApiException si ocurre un error en la API o
+     * si falla la conexión.
+     * @return void
+     */
+    public function testCalcularMontoLiquido()
     {
-        $url = '/bhe/anular/'.self::$numero_bhe;
-        $causa = [
-            'causa' => self::$causa
-        ];
+        $valorBruto = 100000;
+        $fecha = date('Y').'01';
         try {
-            $response = self::$client->post($url, $causa);
-            $this->assertEquals(200, $response->getStatusCode());
+            $response = self::$client->calcularMontoLiquido($valorBruto, $fecha);
+
+            $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_boleta_anular() anular ',$response->getBody(),"\n";
+                echo "\n",'test_calcular_monto_liquido() detalle ',$response->getBody(),"\n";
             }
         } catch (ApiException $e) {
-            $this->fail(sprintf('[ApiException %d] %s', $e->getCode(), $e->getMessage()));
+            throw new ApiException(sprintf(
+                '[ApiException %d] %s',
+                $e->getCode(),
+                $e->getMessage()
+            ));
         }
     }
 }

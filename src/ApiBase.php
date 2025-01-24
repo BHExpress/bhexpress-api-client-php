@@ -21,34 +21,25 @@ declare(strict_types=1);
  * <http://www.gnu.org/licenses/lgpl.html>.
  */
 
-// dependencias de composer
-require_once __DIR__ . '/../vendor/autoload.php';
-
-// cargar variables de entorno (según si test.env existe o no).
-if (file_exists(__DIR__ . '/test.env')) {
-    $dotenv = \Dotenv\Dotenv::createMutable(__DIR__, 'test.env');
-    try {
-        $dotenv->load();
-    } catch (\Dotenv\Exception\InvalidPathException $e) {
-        die($e->getMessage());
-    } catch (\Dotenv\Exception\InvalidFileException $e) {
-        die($e->getMessage());
-    }
-}
+namespace bhexpress\api_client;
 
 /**
- * Función que carga una variable de entorno o su valor por defecto
- * @param string $varname Variable que se desea consultar
- * @param mixed $default Valor por defecto de la variable
+ * Clase base para las clases que consumen la API (wrappers).
  */
-function env($varname, $default = null)
+class ApiBase extends ApiClient
 {
-    if (isset($_ENV[$varname])) {
-        return $_ENV[$varname];
+    /**
+     * Clase base para las clases que consumen la API (wrappers).
+     *
+     * @param string $token Token de autenticación para la API
+     * @param string $rut RUT del emisor de BHExpress.
+     * @param string $url Versión de la API.
+     */
+    public function __construct(
+        string $token = null,
+        string $rut = null,
+        string $url = null
+    ) {
+        parent::__construct($token, $rut, $url);
     }
-    $value = getenv($varname);
-    if ($value !== false) {
-        return $value;
-    }
-    return $default;
 }

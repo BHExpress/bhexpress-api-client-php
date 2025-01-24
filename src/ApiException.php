@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * BHExpress
  * Copyright (C) SASCO SpA (https://sasco.cl)

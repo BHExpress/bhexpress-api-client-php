@@ -6,7 +6,6 @@
     executionOrder="depends,defects"
     colors="true"
     testdox="true"
-    verbose="true"
     requireCoverageMetadata="true"
     beStrictAboutCoverageMetadata="true"
     beStrictAboutOutputDuringTests="false"
@@ -23,29 +22,40 @@
     failOnPhpunitDeprecation="true"
     failOnNotice="true"
 >
+    <source>
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </source>
     <testsuites>
-        <testsuite name="BHExpress: Cliente de API en PHP - Pruebas Unitarias.">
-            <directory>tests</directory>
+        <testsuite name="receptores">
+            <directory>tests/bhe/receptores</directory>
         </testsuite>
-        <testsuite name="readonly">
-            <file>tests/bhe/BoletaListarTest.php</file>
-            <file>tests/bhe/BoletaPdfTest.php</file>
+        <testsuite name="servicios">
+            <directory>tests/bhe/servicios</directory>
         </testsuite>
-        <testsuite name="authneeded">
-            <file>tests/bhe/BoletaEmitirTest.php</file>
-            <file>tests/bhe/BoletaEmailTest.php</file>
-            <file>tests/bhe/BoletaAnularTest.php</file>
+        <testsuite name="boletas">
+            <directory>tests/bhe/boletas</directory>
         </testsuite>
     </testsuites>
-    <filter>
-        <whitelist>
-            <directory suffix=".php">src</directory>
-        </whitelist>
-    </filter>
+    <coverage
+        ignoreDeprecatedCodeUnits="true"
+        pathCoverage="true"
+    >
+        <report>
+            <text
+                outputFile="var/tests-coverage.txt"
+                showUncoveredFiles="true"
+            />
+            <clover outputFile="var/tests-coverage.xml" />
+        </report>
+    </coverage>
+    <logging>
+        <testdoxText outputFile="var/tests-testdox.txt"/>
+    </logging>
     <php>
         <ini name="memory_limit" value="-1" />
-        <env name="BHEXPRESS_API_URL" value="https://apigateway.cl" />
+        <env name="BHEXPRESS_API_URL" value="https://bhexpress.cl" />
         <env name="BHEXPRESS_EMISOR_RUT" value="76192083-9" />
-        <env name="TEST_PERIODO" value="202407" />
     </php>
 </phpunit>

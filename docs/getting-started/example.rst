@@ -1,7 +1,7 @@
 Ejemplo
 =======
 
-Para utilizar el cliente de API de BHExpress, deberás tener definido el token de API y el RUT del emisor como variables de entorno. 
+Para utilizar el cliente de API de BHExpress, deberás tener definido el token de API y el RUT del emisor como variables de entorno.
 
 .. seealso::
     Para más información sobre este paso, referirse al la guía en Configuración.
@@ -15,16 +15,14 @@ El siguiente es un ejemplo básico de cómo emitir una BHE utilizando el cliente
     require_once __DIR__ . '/vendor/autoload.php';
 
     # Importaciones del cliente de API de BHExpress
-    use bhexpress\api_client\ApiClient;
+    use bhexpress\api_client\bhe\Bhe;
 
     # Instancia de cliente.
-    $client = new ApiClient();
+    $client = new Bhe();
     # RUT del emisor.
     $emisor_rut = "12345678-9";
     # Fecha de emisión de BHE.
     $fecha_emis = date('Y-m-d');
-    # Recurso a consumir.
-    $url = '/bhe/emitir';
 
     # Datos de la boleta a ser emitida.
     $datos_boleta = [
@@ -93,7 +91,7 @@ El siguiente es un ejemplo básico de cómo emitir una BHE utilizando el cliente
     ];
 
     # Respuesta de solicitud HTTP (POST) de emisión de boleta.
-    $response = $client->post($url, $datos_boleta);
+    $response = $client->emitirBhe($datos_boleta);
 
     # Despliegue del resultado.
     echo "\n", $response->getStatusCode();
