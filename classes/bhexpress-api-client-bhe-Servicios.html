@@ -134,12 +134,16 @@
                                         <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/bhexpress.html">bhexpress</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/bhexpress-api-client.html">api_client</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/bhexpress-api-client-bhe.html">bhe</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    ApiClient
+    Servicios
 
+        <span class="phpdocumentor-element__extends">
+        extends <a href="classes/bhexpress-api-client-ApiBase.html"><abbr title="\bhexpress\api_client\ApiBase">ApiBase</abbr></a>
+    </span>
     
             <div class="phpdocumentor-element__package">
             in package
@@ -159,41 +163,17 @@
 </div>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/ApiClient.php"><a href="files/src-apiclient.html"><abbr title="src/ApiClient.php">ApiClient.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/bhe/Servicios.php"><a href="files/src-bhe-servicios.html"><abbr title="src/bhe/Servicios.php">Servicios.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Cliente de la API de BHExpress</p>
+            <p class="phpdocumentor-summary">Módulo que permite obtener información de servicios registrados que provees desde la cuenta de BHExpress.</p>
 
 
 
 
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="classes/bhexpress-api-client-ApiClient.html#tags" class="headerlink"><i class="fas fa-link"></i></a>
-
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">author</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>Esteban De La Fuente Rubio, DeLaF (esteban[at]sasco.cl)</p>
-</section>
-
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">version</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">2021-04-22</span>
-                                                                                
-                                             
-                                    </dd>
-                                            </dl>
 
 
 
@@ -201,7 +181,7 @@
 
 <h3 id="toc">
     Table of Contents
-    <a href="classes/bhexpress-api-client-ApiClient.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/bhexpress-api-client-bhe-Servicios.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h3>
 
@@ -215,7 +195,7 @@
 
 <h4 id="toc-properties">
     Properties
-    <a href="classes/bhexpress-api-client-ApiClient.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/bhexpress-api-client-bhe-Servicios.html#toc-properties" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
@@ -272,16 +252,16 @@
 
 <h4 id="toc-methods">
     Methods
-    <a href="classes/bhexpress-api-client-ApiClient.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
+    <a href="classes/bhexpress-api-client-bhe-Servicios.html#toc-methods" class="headerlink"><i class="fas fa-link"></i></a>
 
 </h4>
 <dl class="phpdocumentor-table-of-contents">
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a class="" href="classes/bhexpress-api-client-ApiClient.html#method___construct">__construct()</a>
+    <a class="" href="classes/bhexpress-api-client-bhe-Servicios.html#method___construct">__construct()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
-<dd>Constructor del cliente de la API.</dd>
+<dd>Módulo que permite obtener información de servicios registrados que provees desde la cuenta de BHExpress.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/bhexpress-api-client-ApiClient.html#method_consume">consume()</a>
@@ -331,6 +311,20 @@
                                 &nbsp;: string|null    </span>
 </dt>
 <dd>Obtiene la última URL utilizada en la solicitud HTTP.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/bhexpress-api-client-bhe-Servicios.html#method_listarServicios">listarServicios()</a>
+    <span>
+                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
+</dt>
+<dd>Recurso que permite obtener una lista de servicios provistos por el usuario.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a class="" href="classes/bhexpress-api-client-bhe-Servicios.html#method_obtenerDetalleServicio">obtenerDetalleServicio()</a>
+    <span>
+                                &nbsp;: <abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr>    </span>
+</dt>
+<dd>Recurso que permite obtener información de un servicio provisto específico.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a class="" href="classes/bhexpress-api-client-ApiClient.html#method_post">post()</a>
@@ -405,7 +399,7 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/bhexpress-api-client-ApiClient.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/bhexpress-api-client-bhe-Servicios.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -672,7 +666,7 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/bhexpress-api-client-ApiClient.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/bhexpress-api-client-bhe-Servicios.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
 
         </h3>
                     <article
@@ -683,21 +677,21 @@
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/bhexpress-api-client-ApiClient.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/bhexpress-api-client-bhe-Servicios.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
 
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/ApiClient.php"><a href="files/src-apiclient.html"><abbr title="src/ApiClient.php">ApiClient.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/bhe/Servicios.php"><a href="files/src-bhe-servicios.html"><abbr title="src/bhe/Servicios.php">Servicios.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Constructor del cliente de la API.</p>
+        <p class="phpdocumentor-summary">Módulo que permite obtener información de servicios registrados que provees desde la cuenta de BHExpress.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rut</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$url</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                    <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$token</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$rut</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$url</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
     <div class="phpdocumentor-label-line">
         </div>
@@ -707,28 +701,31 @@
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$token</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Token de autenticación para la API.</p>
+                    <section class="phpdocumentor-description"><p>Token de autenticación del usuario. Si no se
+proporciona, se intentará obtener de una variable de entorno.</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$rut</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>RUT del emisor de las BHE. # NUEVA LINEA</p>
+                    <section class="phpdocumentor-description"><p>RUT del emisor de BHExpress. Si no se proporciona,
+se intentará obtener de una variable de entorno.</p>
 </section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$url</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
                  = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>URL base de la API.</p>
+                    <section class="phpdocumentor-description"><p>URL base de la API. Si no se proporciona, se
+usará una URL por defecto.</p>
 </section>
 
             </dd>
@@ -1191,6 +1188,115 @@ formato JSON a un arreglo asociativo de PHP.</p>
             <section>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
         <span class="phpdocumentor-signature__response_type">string|null</span>
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_listarServicios">
+        listarServicios()
+        <a href="classes/bhexpress-api-client-bhe-Servicios.html#method_listarServicios" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/bhe/Servicios.php"><a href="files/src-bhe-servicios.html"><abbr title="src/bhe/Servicios.php">Servicios.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">54</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Recurso que permite obtener una lista de servicios provistos por el usuario.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">listarServicios</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+    
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Respuesta con el servicio
+(o lista de servicios) provisto en BHExpress.</p>
+</section>
+
+            </section>
+
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_obtenerDetalleServicio">
+        obtenerDetalleServicio()
+        <a href="classes/bhexpress-api-client-bhe-Servicios.html#method_obtenerDetalleServicio" class="headerlink"><i class="fas fa-link"></i></a>
+
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/bhe/Servicios.php"><a href="files/src-bhe-servicios.html"><abbr title="src/bhe/Servicios.php">Servicios.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">71</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Recurso que permite obtener información de un servicio provisto específico.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">obtenerDetalleServicio</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$codigo</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filtros</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span></code>
+
+    <div class="phpdocumentor-label-line">
+        </div>
+    
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$codigo</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Código del servicio prestado en BHExpress.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$filtros</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Filtros adicionales.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+
+            <section>
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+        <span class="phpdocumentor-signature__response_type"><abbr title="\Psr\Http\Message\ResponseInterface">ResponseInterface</abbr></span>
+                    &mdash;
+                <section class="phpdocumentor-description"><p>Respuesta con el servicio
+(o lista de servicios) provisto en BHExpress.</p>
+</section>
+
             </section>
 
 </article>
@@ -1732,7 +1838,7 @@ uniforme en toda la clase.</p>
     <div class="phpdocumentor-modal-bg" data-exit-button></div>
     <div class="phpdocumentor-modal-container">
         <div class="phpdocumentor-modal-content">
-            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/ApiClient.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
+            <pre style="max-height: 500px; overflow-y: scroll" data-src="files/src/bhe/Servicios.php.txt" class="language-php line-numbers linkable-line-numbers"></pre>
         </div>
         <button data-exit-button class="phpdocumentor-modal__close">&times;</button>
     </div>
@@ -1831,8 +1937,8 @@ uniforme en toda la clase.</p>
             <li class="phpdocumentor-on-this-page-section__title">Table Of Contents</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                                            <li><a href="classes/bhexpress-api-client-ApiClient.html#toc-properties">Properties</a></li>
-                                                            <li><a href="classes/bhexpress-api-client-ApiClient.html#toc-methods">Methods</a></li>
+                                                            <li><a href="classes/bhexpress-api-client-bhe-Servicios.html#toc-properties">Properties</a></li>
+                                                            <li><a href="classes/bhexpress-api-client-bhe-Servicios.html#toc-methods">Methods</a></li>
                                     </ul>
             </li>
             
@@ -1852,7 +1958,7 @@ uniforme en toda la clase.</p>
                         <li class="phpdocumentor-on-this-page-section__title">Methods</li>
             <li>
                 <ul class="phpdocumentor-list -clean">
-                                            <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method___construct">__construct()</a></li>
+                                            <li class=""><a href="classes/bhexpress-api-client-bhe-Servicios.html#method___construct">__construct()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_consume">consume()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_delete">delete()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_get">get()</a></li>
@@ -1860,6 +1966,8 @@ uniforme en toda la clase.</p>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_getBodyDecoded">getBodyDecoded()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_getLastResponse">getLastResponse()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_getLastUrl">getLastUrl()</a></li>
+                                            <li class=""><a href="classes/bhexpress-api-client-bhe-Servicios.html#method_listarServicios">listarServicios()</a></li>
+                                            <li class=""><a href="classes/bhexpress-api-client-bhe-Servicios.html#method_obtenerDetalleServicio">obtenerDetalleServicio()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_post">post()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_put">put()</a></li>
                                             <li class=""><a href="classes/bhexpress-api-client-ApiClient.html#method_setRut">setRut()</a></li>
@@ -1888,7 +1996,7 @@ uniforme en toda la clase.</p>
     </section>
 </section>
         </div>
-        <a href="classes/bhexpress-api-client-ApiClient.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/bhexpress-api-client-bhe-Servicios.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

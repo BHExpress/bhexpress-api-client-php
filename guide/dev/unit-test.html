@@ -150,7 +150,8 @@
     <p>Antes de empezar, debes configurar las siguientes variables de entorno:</p>
 
             <pre><code class="language-shell">BHEXPRESS_API_URL=&quot;https://bhexpress.cl&quot;
-BHEXPRESS_API_TOKEN=&quot;token-bhexpress&quot;</code></pre>
+BHEXPRESS_API_TOKEN=&quot;token-bhexpress&quot;
+BHEXPRESS_EMISOR_RUT=&quot;12345678-9&quot;</code></pre>
 
             
     <p>Para ejecutar las pruebas unitarias se necesita tener instaladas las dependencias de composer, y para hacer todas las pruebas, ejecutar lo siguiente:</p>
@@ -160,7 +161,12 @@ BHEXPRESS_API_TOKEN=&quot;token-bhexpress&quot;</code></pre>
             
     <p>También es posible ejecutar una pruebas específica indicando el test. Ejemplo:</p>
 
-            <pre><code class="language-shell">./vendor/bin/phpunit --filter test_boleta_listar</code></pre>
+            <pre><code class="language-shell">./vendor/bin/phpunit --filter testListarBhes --no-coverage</code></pre>
+
+            
+    <p>Alternativamente, se puede ejecutar un &quot;testsuite&quot;, o conjunto de tests (solo válido desde la versión de GitHub, o si has definido testsuites previamente):</p>
+
+            <pre><code class="language-shell">./vendor/bin/phpunit --no-coverage --testsuite servicios</code></pre>
 
     </section>
 

@@ -155,16 +155,14 @@
 require_once __DIR__ . &#039;/vendor/autoload.php&#039;;
 
 # Importaciones del cliente de API de BHExpress
-use bhexpress\api_client\ApiClient;
+use bhexpress\api_client\bhe\Bhe;
 
 # Instancia de cliente.
-$client = new ApiClient();
+$client = new Bhe();
 # RUT del emisor.
 $emisor_rut = &quot;12345678-9&quot;;
 # Fecha de emisión de BHE.
 $fecha_emis = date(&#039;Y-m-d&#039;);
-# Recurso a consumir.
-$url = &#039;/bhe/emitir&#039;;
 
 # Datos de la boleta a ser emitida.
 $datos_boleta = [
@@ -233,7 +231,7 @@ $datos_boleta = [
 ];
 
 # Respuesta de solicitud HTTP (POST) de emisión de boleta.
-$response = $client-&gt;post($url, $datos_boleta);
+$response = $client-&gt;emitirBhe($datos_boleta);
 
 # Despliegue del resultado.
 echo &quot;\n&quot;, $response-&gt;getStatusCode();
