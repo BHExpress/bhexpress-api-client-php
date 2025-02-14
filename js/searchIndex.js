@@ -143,22 +143,22 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Bhe",
             "name": "Bhe",
-            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020gestionar\u0020las\u0020BHE\u0020registradas\u0020y\/o\u0020sincronizadas\u0020en\u0020BHExpress.",
+            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020gestionar\u0020las\u0020BHE\u0020registradas\u0020y\/o\u0020sincronizadas\nen\u0020BHExpress.",
             "url": "classes/bhexpress-api-client-bhe-Bhe.html"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Bhe\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020gestionar\u0020las\u0020BHE\u0020registradas\u0020y\/o\u0020sincronizadas\u0020en\u0020BHExpress.",
+            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020gestionar\u0020las\u0020BHE\u0020registradas\u0020y\/o\u0020sincronizadas\nen\u0020BHExpress.",
             "url": "classes/bhexpress-api-client-bhe-Bhe.html#method___construct"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Bhe\u003A\u003AlistarBhes\u0028\u0029",
             "name": "listarBhes",
-            "summary": "Recurso\u0020que\u0020permite\u0020obtener\u0020el\u0020listado\u0020paginado\u0020de\u0020boletas\u0020de\u0020honorarios\u0020electr\u00F3nicas\u0020emitidas.",
+            "summary": "Recurso\u0020que\u0020permite\u0020obtener\u0020el\u0020listado\u0020paginado\u0020de\u0020boletas\u0020de\u0020honorarios\nelectr\u00F3nicas\u0020emitidas.",
             "url": "classes/bhexpress-api-client-bhe-Bhe.html#method_listarBhes"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Bhe\u003A\u003AobtenerDetalleBhe\u0028\u0029",
             "name": "obtenerDetalleBhe",
-            "summary": "Recurso\u0020que\u0020permite\u0020obtener\u0020el\u0020detalle\u0020de\u0020una\u0020boleta\u0020de\u0020honorarios\u0020electr\u00F3nica\u0020emitida.",
+            "summary": "Recurso\u0020que\u0020permite\u0020obtener\u0020el\u0020detalle\u0020de\u0020una\u0020boleta\u0020de\u0020honorarios\nelectr\u00F3nica\u0020emitida.",
             "url": "classes/bhexpress-api-client-bhe-Bhe.html#method_obtenerDetalleBhe"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Bhe\u003A\u003AemitirBhe\u0028\u0029",
@@ -178,7 +178,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Bhe\u003A\u003AanularBhe\u0028\u0029",
             "name": "anularBhe",
-            "summary": "Recurso\u0020que\u0020permite\u0020anular\u0020una\u0020Boleta\u0020de\u0020Honorarios\u0020Electr\u00F3nica\u0020espec\u00EDfica.",
+            "summary": "Recurso\u0020que\u0020permite\u0020anular\u0020una\u0020Boleta\u0020de\u0020Honorarios\u0020Electr\u00F3nica\nespec\u00EDfica.",
             "url": "classes/bhexpress-api-client-bhe-Bhe.html#method_anularBhe"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Bhe\u003A\u003AcalcularMontoLiquido\u0028\u0029",
@@ -193,17 +193,17 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Receptores",
             "name": "Receptores",
-            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020receptores\u0020con\u0020los\u0020cuales\u0020se\u0020haya\u0020interactuado.",
+            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020receptores\u0020con\u0020los\u0020cuales\u0020se\nhaya\u0020interactuado.",
             "url": "classes/bhexpress-api-client-bhe-Receptores.html"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Receptores\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020receptores\u0020con\u0020los\u0020cuales\u0020se\u0020haya\u0020interactuado.",
+            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020receptores\u0020con\u0020los\u0020cuales\u0020se\nhaya\u0020interactuado.",
             "url": "classes/bhexpress-api-client-bhe-Receptores.html#method___construct"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Receptores\u003A\u003AlistarReceptores\u0028\u0029",
             "name": "listarReceptores",
-            "summary": "Recurso\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020uno\u0020o\u0020m\u00E1s\u0020receptores\u0020con\u0020los\u0020que\nya\u0020se\u0020haya\u0020interactuado.",
+            "summary": "Recurso\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020uno\u0020o\u0020m\u00E1s\u0020receptores\u0020con\u0020los\nque\u0020ya\u0020se\u0020haya\u0020interactuado.",
             "url": "classes/bhexpress-api-client-bhe-Receptores.html#method_listarReceptores"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Receptores\u003A\u003AobtenerDetalleReceptor\u0028\u0029",
@@ -213,12 +213,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Servicios",
             "name": "Servicios",
-            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020servicios\u0020registrados\u0020que\u0020provees\u0020desde\u0020la\u0020cuenta\u0020de\u0020BHExpress.",
+            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020servicios\u0020registrados\u0020que\nprovees\u0020desde\u0020la\u0020cuenta\u0020de\u0020BHExpress.",
             "url": "classes/bhexpress-api-client-bhe-Servicios.html"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Servicios\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020servicios\u0020registrados\u0020que\u0020provees\u0020desde\u0020la\u0020cuenta\u0020de\u0020BHExpress.",
+            "summary": "M\u00F3dulo\u0020que\u0020permite\u0020obtener\u0020informaci\u00F3n\u0020de\u0020servicios\u0020registrados\nque\u0020provees\u0020desde\u0020la\u0020cuenta\u0020de\u0020BHExpress.",
             "url": "classes/bhexpress-api-client-bhe-Servicios.html#method___construct"
         },                {
             "fqsen": "\\bhexpress\\api_client\\bhe\\Servicios\u003A\u003AlistarServicios\u0028\u0029",
