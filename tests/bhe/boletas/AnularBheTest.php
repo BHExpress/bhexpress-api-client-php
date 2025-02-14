@@ -41,7 +41,7 @@ class AnularBheTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
     }
 
@@ -52,13 +52,16 @@ class AnularBheTest extends AbstractBoletas
      * búsqueda falla, o si ocurre un error de conexión.
      * @return void
      */
-    public function testAnularBhe()
+    public function testAnularBhe(): void
     {
         $causa = 3;
 
         $listaBhes = $this->listar();
-        $body_dec = json_decode($listaBhes->getBody()->getContents(), true);
-        $numeroBhe = $body_dec['results'][0]['numero'];
+        $body_dec = json_decode(
+            json: $listaBhes->getBody()->getContents(),
+            associative: true
+        )['results'][0];
+        $numeroBhe = $body_dec['numero'];
 
         try {
             $response = self::$client->anularBhe($numeroBhe, $causa);
@@ -66,10 +69,13 @@ class AnularBheTest extends AbstractBoletas
             $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_boleta_anular() anular ',$response->getBody(),"\n";
+                echo "\n",
+                'test_boleta_anular() anular ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

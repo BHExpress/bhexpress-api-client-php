@@ -24,20 +24,23 @@ declare(strict_types=1);
 namespace bhexpress\api_client\bhe;
 
 use bhexpress\api_client\ApiBase;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Módulo que permite obtener información de receptores con los cuales se haya interactuado.
+ * Módulo que permite obtener información de receptores con los cuales se
+ * haya interactuado.
  */
 class Receptores extends ApiBase
 {
     /**
-     * Módulo que permite obtener información de receptores con los cuales se haya interactuado.
+     * Módulo que permite obtener información de receptores con los cuales se
+     * haya interactuado.
      *
-     * @param string $token Token de autenticación del usuario. Si no se
+     * @param string|null $token Token de autenticación del usuario. Si no se
      * proporciona, se intentará obtener de una variable de entorno.
-     * @param string $rut RUT del emisor de BHExpress. Si no se proporciona,
+     * @param string|null $rut RUT del emisor de BHExpress. Si no se proporciona,
      * se intentará obtener de una variable de entorno.
-     * @param string $url URL base de la API. Si no se proporciona, se
+     * @param string|null $url URL base de la API. Si no se proporciona, se
      * usará una URL por defecto.
      */
     public function __construct(
@@ -45,20 +48,21 @@ class Receptores extends ApiBase
         string $rut = null,
         string $url = null
     ) {
-        parent::__construct($token, $rut, $url);
+        parent::__construct(token: $token, rut: $rut, url: $url);
     }
 
     /**
-     * Recurso que permite obtener información de uno o más receptores con los que
-     * ya se haya interactuado.
+     * Recurso que permite obtener información de uno o más receptores con los
+     * que ya se haya interactuado.
      *
-     * @return \Psr\Http\Message\ResponseInterface Respuesta con la lista de receptores.
+     * @return \Psr\Http\Message\ResponseInterface Respuesta con la lista de
+     * receptores.
      */
-    public function listarReceptores()
+    public function listarReceptores(): ResponseInterface
     {
         $url = '/bhe/receptores';
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }
@@ -72,8 +76,10 @@ class Receptores extends ApiBase
      * @return \Psr\Http\Message\ResponseInterface Respuesta con la
      * información del receptor.
      */
-    public function obtenerDetalleReceptor(int $rut = null, int $codigo = null)
-    {
+    public function obtenerDetalleReceptor(
+        int $rut = null,
+        int $codigo = null
+    ): ResponseInterface {
         $url = '/bhe/receptores';
 
         if (isset($rut)) {
@@ -83,7 +89,7 @@ class Receptores extends ApiBase
             $url = sprintf('%s/%d', $url, $codigo);
         }
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }

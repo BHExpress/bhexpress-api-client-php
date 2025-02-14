@@ -41,7 +41,7 @@ class ObtenerDetalleBheTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
     }
 
@@ -52,23 +52,28 @@ class ObtenerDetalleBheTest extends AbstractBoletas
      * búsqueda falla, o si no hay conexión.
      * @return void
      */
-    public function testObtenerDetalleBhe()
+    public function testObtenerDetalleBhe(): void
     {
         $listaBhes = $this->listar();
-        $body_dec = json_decode($listaBhes->getBody()->getContents(), true);
-        $numeroBhe = $body_dec['results'][0]['numero'];
+        $body_dec = json_decode(
+            json: $listaBhes->getBody()->getContents(),
+            associative: true
+        )['results'][0];
+        $numeroBhe = $body_dec['numero'];
 
         try {
-
             $response = self::$client->obtenerDetalleBhe($numeroBhe);
 
             $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_boleta_obtener_detalle() bhe ',$response->getBody(),"\n";
+                echo "\n",
+                'test_boleta_obtener_detalle() bhe ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

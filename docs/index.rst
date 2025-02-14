@@ -13,12 +13,6 @@ Docs: bhexpress-api-client-php
 .. image:: https://poser.pugx.org/bhexpress/bhexpress-api-client/license
    :target: https://packagist.org/packages/bhexpress/bhexpress-api-client
 
-.. image:: https://app.fossa.com/api/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php.svg?type=shield&issueType=license
-   :target: https://app.fossa.com/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php?ref=badge_shield&issueType=license
-
-.. image:: https://app.fossa.com/api/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php.svg?type=shield&issueType=security
-   :target: https://app.fossa.com/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php?ref=badge_shield&issueType=security
-
 .. image:: https://poser.pugx.org/bhexpress/bhexpress-api-client/downloads
    :target: https://packagist.org/packages/bhexpress/bhexpress-api-client
 

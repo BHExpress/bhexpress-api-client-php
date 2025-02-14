@@ -48,7 +48,7 @@ class ListarReceptoresTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Receptores();
     }
 
@@ -59,7 +59,7 @@ class ListarReceptoresTest extends TestCase
      * no hay conexión.
      * @return void
      */
-    public function testListarReceptores()
+    public function testListarReceptores(): void
     {
         try {
             $response = self::$client->listarReceptores();
@@ -67,10 +67,13 @@ class ListarReceptoresTest extends TestCase
             $this->assertTrue(true);
 
             if (self::$verbose) {
-                echo "\n",'test_listar_receptores() listar ',$response->getBody(),"\n";
+                echo "\n",
+                'test_listar_receptores() listar ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

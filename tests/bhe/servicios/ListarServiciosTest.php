@@ -48,7 +48,7 @@ class ListarServiciosTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Servicios();
     }
 
@@ -59,7 +59,7 @@ class ListarServiciosTest extends TestCase
      * hay conexión.
      * @return void
      */
-    public function testListarServicios()
+    public function testListarServicios(): void
     {
         try {
             $response = self::$client->listarServicios();
@@ -67,10 +67,13 @@ class ListarServiciosTest extends TestCase
             $this->assertTrue(true);
 
             if (self::$verbose) {
-                echo "\n",'test_listar_servicios() listar ',$response->getBody(),"\n";
+                echo "\n",
+                'test_listar_servicios() listar ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

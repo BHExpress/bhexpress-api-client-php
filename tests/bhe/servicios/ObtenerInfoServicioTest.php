@@ -67,19 +67,28 @@ class ObtenerInfoServicioTest extends TestCase
         ];
         try {
             $responseServicio = self::$client->listarServicios();
-            $servicioDec = json_decode($responseServicio->getBody()->getContents(), true);
+            $servicioDec = json_decode(
+                json: $responseServicio->getBody()->getContents(),
+                associative: true
+            )['results'][0];
 
-            $codigo = $servicioDec['results'][0]['codigo'];
+            $codigo = $servicioDec['codigo'];
 
-            $response = self::$client->obtenerDetalleServicio($codigo, $filtros);
+            $response = self::$client->obtenerDetalleServicio(
+                $codigo,
+                $filtros
+            );
 
             $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_obtener_info_servicio() servicio ',$response->getBody(),"\n";
+                echo "\n",
+                'test_obtener_info_servicio() servicio ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

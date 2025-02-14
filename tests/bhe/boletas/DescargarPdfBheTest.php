@@ -48,9 +48,9 @@ class DescargarPdfBheTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
-        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
+        self::$emisor_rut = env(varname: 'BHEXPRESS_EMISOR_RUT');
     }
 
     /**
@@ -61,24 +61,32 @@ class DescargarPdfBheTest extends AbstractBoletas
      * no existe, o si no hay conexión.
      * @return void
      */
-    public function testDescargarPdfBhe()
+    public function testDescargarPdfBhe(): void
     {
         $response_body = $this->listar();
 
-        $body_dec = json_decode($response_body->getBody()->getContents(), true);
-        $numero_bhe = $body_dec['results'][0]['numero'];
+        $body_dec = json_decode(
+            json: $response_body->getBody()->getContents(),
+            associative: true
+        )['results'][0];
+        $numero_bhe = $body_dec['numero'];
 
         try {
             $response = self::$client->descargarPdfBhe($numero_bhe);
 
-            $this->assertNotEmpty($response, 'El contenido del PDF no debe estar vacío');
+            $this->assertNotEmpty(
+                $response,
+                'El contenido del PDF no debe estar vacío'
+            );
 
             // Ruta base para el directorio actual (archivo ejecutándose en
             // "tests/dte_facturacion")
             $currentDir = __DIR__;
 
             // Nueva ruta relativa para guardar el archivo PDF en "tests/archivos"
-            $targetDir = dirname(dirname($currentDir)) . '/archivos/bhe_emitidas_pdf';
+            $targetDir = dirname(
+                dirname($currentDir)
+            ) . '/archivos/bhe_emitidas_pdf';
 
             // Define el nombre del archivo PDF en el nuevo directorio
             $filename = $targetDir . '/' . sprintf(
@@ -89,19 +97,25 @@ class DescargarPdfBheTest extends AbstractBoletas
 
             // Verifica si el directorio existe, si no, créalo
             if (!is_dir($targetDir)) {
-                mkdir($targetDir, 0777, true);
+                mkdir(directory: $targetDir, permissions: 0777, recursive: true);
             }
 
             // Se genera el archivo PDF.
             file_put_contents($filename, $response->getBody());
 
-            $this->assertFileExists($filename, 'El archivo PDF debe existir en el sistema de archivos');
+            $this->assertFileExists(
+                $filename,
+                'El archivo PDF debe existir en el sistema de archivos'
+            );
 
             if (self::$verbose) {
-                echo "\n",'test_boleta_pdf() pdf ',' Se ha generado exitosamente un PDF. ',"\n";
+                echo "\n",
+                'test_boleta_pdf() pdf ',
+                ' Se ha generado exitosamente un PDF. ',
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

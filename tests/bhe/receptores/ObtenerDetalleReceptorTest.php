@@ -48,7 +48,7 @@ class ObtenerDetalleReceptorTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Receptores();
     }
 
@@ -60,22 +60,28 @@ class ObtenerDetalleReceptorTest extends TestCase
      * búsqueda falla, o si no hay conexión.
      * @return void
      */
-    public function testObtenerDetalleReceptor()
+    public function testObtenerDetalleReceptor(): void
     {
         try {
             $responseLista = self::$client->listarReceptores();
-            $listaDec = json_decode($responseLista->getBody()->getContents(), true);
-            $rut = $listaDec['results'][0]['rut'];
+            $listaDec = json_decode(
+                json: $responseLista->getBody()->getContents(),
+                associative: true
+            )['results'][0];
+            $rut = $listaDec['rut'];
 
-            $response = self::$client->obtenerDetalleReceptor($rut);
+            $response = self::$client->obtenerDetalleReceptor(rut: $rut);
 
             $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_detalle_receptores() detalle ',$response->getBody(),"\n";
+                echo "\n",
+                'test_detalle_receptores() detalle ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

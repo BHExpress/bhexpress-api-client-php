@@ -24,25 +24,28 @@ declare(strict_types=1);
 namespace bhexpress\api_client\bhe;
 
 use bhexpress\api_client\ApiBase;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Módulo que permite obtener información de servicios registrados que provees desde la cuenta de BHExpress.
+ * Módulo que permite obtener información de servicios registrados que
+ * provees desde la cuenta de BHExpress.
  */
 class Servicios extends ApiBase
 {
     /**
-     * Módulo que permite obtener información de servicios registrados que provees desde la cuenta de BHExpress.
+     * Módulo que permite obtener información de servicios registrados
+     * que provees desde la cuenta de BHExpress.
      *
-     * @param string $token Token de autenticación del usuario. Si no se
+     * @param string|null $token Token de autenticación del usuario. Si no se
      * proporciona, se intentará obtener de una variable de entorno.
-     * @param string $rut RUT del emisor de BHExpress. Si no se proporciona,
+     * @param string|null $rut RUT del emisor de BHExpress. Si no se proporciona,
      * se intentará obtener de una variable de entorno.
-     * @param string $url URL base de la API. Si no se proporciona, se
+     * @param string|null $url URL base de la API. Si no se proporciona, se
      * usará una URL por defecto.
      */
     public function __construct($token = null, $rut = null, $url = null)
     {
-        parent::__construct($token, $rut, $url);
+        parent::__construct(token: $token, rut: $rut, url: $url);
     }
 
     /**
@@ -51,11 +54,11 @@ class Servicios extends ApiBase
      * @return \Psr\Http\Message\ResponseInterface Respuesta con el servicio
      * (o lista de servicios) provisto en BHExpress.
      */
-    public function listarServicios()
+    public function listarServicios(): ResponseInterface
     {
         $url = '/bhe/servicios';
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }
@@ -68,8 +71,10 @@ class Servicios extends ApiBase
      * @return \Psr\Http\Message\ResponseInterface Respuesta con el servicio
      * (o lista de servicios) provisto en BHExpress.
      */
-    public function obtenerDetalleServicio(string $codigo, array $filtros)
-    {
+    public function obtenerDetalleServicio(
+        string $codigo,
+        array $filtros
+    ): ResponseInterface {
         $url = sprintf('/bhe/servicios/%s', $codigo);
 
         if (count($filtros) > 0) {
@@ -77,7 +82,7 @@ class Servicios extends ApiBase
             $url = sprintf('%s?%s', $url, $queryString);
         }
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }

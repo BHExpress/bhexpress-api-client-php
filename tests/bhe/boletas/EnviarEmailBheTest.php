@@ -48,9 +48,9 @@ class EnviarEmailBheTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
-        self::$email = env('TEST_CORREO', '');
+        self::$email = env(varname: 'TEST_CORREO', default: '');
     }
 
     /**
@@ -60,22 +60,31 @@ class EnviarEmailBheTest extends AbstractBoletas
      * @throws \bhexpress\api_client\ApiException si el envío falla, o no hay conexión.
      * @return void
      */
-    public function testEnviarEmailBhe()
+    public function testEnviarEmailBhe(): void
     {
         $listaBhes = $this->listar();
-        $body_dec = json_decode($listaBhes->getBody()->getContents(), true);
-        $numeroBhe = $body_dec['results'][0]['numero'];
+        $body_dec = json_decode(
+            json: $listaBhes->getBody()->getContents(),
+            associative: true
+        )['results'][0];
+        $numeroBhe = $body_dec['numero'];
 
         try {
-            $response = self::$client->enviarEmailBhe($numeroBhe, self::$email);
+            $response = self::$client->enviarEmailBhe(
+                $numeroBhe,
+                self::$email
+            );
 
             $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_boleta_email() email ',$response->getBody(),"\n";
+                echo "\n",
+                'test_boleta_email() email ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

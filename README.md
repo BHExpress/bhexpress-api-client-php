@@ -5,8 +5,6 @@ BHExpress: Cliente de API en PHP
 [![Scrutinizer](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/)
 [![Coverage](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/)
 [![Licencia](https://poser.pugx.org/bhexpress/bhexpress-api-client/license)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php?ref=badge_shield&issueType=license)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php.svg?type=shield&issueType=security)](https://app.fossa.com/projects/git%2Bgithub.com%2FBHExpress%2Fbhexpress-api-client-php?ref=badge_shield&issueType=security)
 [![Descargas Totales](https://poser.pugx.org/bhexpress/bhexpress-api-client/downloads)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
 [![Descargas Mensuales](https://poser.pugx.org/bhexpress/bhexpress-api-client/d/monthly)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
 

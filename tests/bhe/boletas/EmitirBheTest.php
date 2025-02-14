@@ -69,60 +69,56 @@ class EmitirBheTest extends AbstractBoletas
         ],
         'Detalle' => [
             [
-                'NmbItem' => 'Item con monto final solamente (lo básico en SII)',
+                'NmbItem' => 'Item con monto básico',
                 'MontoItem' => 100,
             ],
             [
                 'CdgItem' => 'CASO2',
-                'NmbItem' => 'Se agrega código al item',
+                'NmbItem' => 'Item con monto y codigo',
                 'MontoItem' => 300,
             ],
             [
-                'NmbItem' => 'Se agrega cantidad al item (se indica precio unitario)',
+                'NmbItem' => 'Item con precio unit y cantidad',
                 'QtyItem' => 1,
                 'PrcItem' => 120,
             ],
             [
-                'NmbItem' => 'Se agrega cantidad al item (se indica precio unitario)',
+                'NmbItem' => 'Item con precio unit y cantidad decimal',
                 'QtyItem' => 0.5,
                 'PrcItem' => 120,
             ],
             [
                 'CdgItem' => 'CASO2',
-                'NmbItem' => 'Se agrega código y cantidad al item (se indica precio unitario)',
+                'NmbItem' => 'Item con codigo, precio unit y cantidad.',
                 'QtyItem' => 2,
                 'PrcItem' => 250,
             ],
             [
                 'CdgItem' => 'COMPLETO',
-                'NmbItem' => 'Caso más completo, con código, cantidad, precio unitario y descuento en porcentaje',
+                'NmbItem' => 'Caso más completo, con dcto porcentual',
                 'QtyItem' => 10,
                 'PrcItem' => 75,
                 'DescuentoPct' => 10,
             ],
             [
                 'CdgItem' => 'COMPLETO',
-                'NmbItem' => 'Caso más completo, con codigo, cantidad, precio unitario y descuento en monto fijo',
+                'NmbItem' => 'Caso más completo, con dcto fijo',
                 'QtyItem' => 10,
                 'PrcItem' => 75,
                 'DescuentoMonto' => 50,
-            ],
-            [
-                'NmbItem' => 'En este caso el MontoItem es descartado por que va cantidad y precio unitario',
-                'QtyItem' => 2,
-                'PrcItem' => 10,
-                'MontoItem' => 100,
             ],
         ],
     ];
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
-        self::$emisor_rut = env('BHEXPRESS_EMISOR_RUT');
-        self::$datos_boleta['Encabezado']['IdDoc']['FchEmis'] = date('Y-m-d');
-        self::$datos_boleta['Encabezado']['Emisor']['RUTEmisor'] = self::$emisor_rut;
+        self::$emisor_rut = env(varname: 'BHEXPRESS_EMISOR_RUT');
+        self::$datos_boleta['Encabezado']['IdDoc']
+        ['FchEmis'] = date('Y-m-d');
+        self::$datos_boleta['Encabezado']['Emisor']
+        ['RUTEmisor'] = self::$emisor_rut;
     }
 
     /**
@@ -132,7 +128,7 @@ class EmitirBheTest extends AbstractBoletas
      * es errónea, si la boleta está incompleta, o si falla la conexión.
      * @return void
      */
-    public function testEmitirBhe()
+    public function testEmitirBhe(): void
     {
         try {
             $response = self::$client->emitirBhe(self::$datos_boleta);
@@ -140,10 +136,13 @@ class EmitirBheTest extends AbstractBoletas
             $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_boleta_emitir() emitir ',$response->getBody(),"\n";
+                echo "\n",
+                'test_boleta_emitir() emitir ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

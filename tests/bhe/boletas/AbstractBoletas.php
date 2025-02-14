@@ -26,6 +26,7 @@ namespace bhexpress\tests\bhe;
 use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Bhe;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Clase abstracta que permite ejecutar un método compartido entre sus clases hijas.
@@ -46,11 +47,14 @@ class AbstractBoletas extends TestCase
      * @return \Psr\Http\Message\ResponseInterface Respuesta con la lista de BHEs
      * filtradas.
      */
-    protected function listar()
+    protected function listar(): ResponseInterface
     {
         $fecha_desde = env(
-            'TEST_FECHA_DESDE',
-            date('Y-m-d', strtotime('-30 days'))
+            varname: 'TEST_FECHA_DESDE',
+            default: date(
+                format: 'Y-m-d',
+                timestamp: strtotime('-30 days')
+            )
         );
         $filtros = [
             'fecha_desde' => $fecha_desde,
@@ -58,10 +62,10 @@ class AbstractBoletas extends TestCase
         ];
 
         try {
-            $response = self::$client->listarBhes($filtros);
+            $response = self::$client->listarBhes(filtros: $filtros);
 
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

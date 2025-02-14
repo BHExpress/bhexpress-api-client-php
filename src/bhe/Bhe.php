@@ -24,20 +24,23 @@ declare(strict_types=1);
 namespace bhexpress\api_client\bhe;
 
 use bhexpress\api_client\ApiBase;
+use Psr\Http\Message\ResponseInterface;
 
 /**
- * Módulo que permite gestionar las BHE registradas y/o sincronizadas en BHExpress.
+ * Módulo que permite gestionar las BHE registradas y/o sincronizadas
+ * en BHExpress.
  */
 class Bhe extends ApiBase
 {
     /**
-     * Módulo que permite gestionar las BHE registradas y/o sincronizadas en BHExpress.
+     * Módulo que permite gestionar las BHE registradas y/o sincronizadas
+     * en BHExpress.
      *
-     * @param string $token Token de autenticación del usuario. Si no se
+     * @param string|null $token Token de autenticación del usuario. Si no se
      * proporciona, se intentará obtener de una variable de entorno.
-     * @param string $rut RUT del emisor de BHExpress. Si no se proporciona,
+     * @param string|null $rut RUT del emisor de BHExpress. Si no se proporciona,
      * se intentará obtener de una variable de entorno.
-     * @param string $url URL base de la API. Si no se proporciona, se
+     * @param string|null $url URL base de la API. Si no se proporciona, se
      * usará una URL por defecto.
      */
     public function __construct(
@@ -45,16 +48,18 @@ class Bhe extends ApiBase
         string $rut = null,
         string $url = null
     ) {
-        parent::__construct($token, $rut, $url);
+        parent::__construct(token: $token, rut: $rut, url: $url);
     }
 
     /**
-     * Recurso que permite obtener el listado paginado de boletas de honorarios electrónicas emitidas.
+     * Recurso que permite obtener el listado paginado de boletas de honorarios
+     * electrónicas emitidas.
      *
      * @param array $filtros Filtros para obtener BHEs específicas (opcional).
-     * @return \Psr\Http\Message\ResponseInterface Respuesta con el listado de boletas emitidas.
+     * @return \Psr\Http\Message\ResponseInterface Respuesta con el listado
+     * de boletas emitidas.
      */
-    public function listarBhes(array $filtros = [])
+    public function listarBhes(array $filtros = []): ResponseInterface
     {
         $url = '/bhe/boletas';
         if (count($filtros) > 0) {
@@ -62,22 +67,24 @@ class Bhe extends ApiBase
             $url = sprintf('%s?%s', $url, $queryString);
         }
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }
 
     /**
-     * Recurso que permite obtener el detalle de una boleta de honorarios electrónica emitida.
+     * Recurso que permite obtener el detalle de una boleta de honorarios
+     * electrónica emitida.
      *
      * @param int $numeroBhe Número de la BHE emitida.
-     * @return \Psr\Http\Message\ResponseInterface Respuesta con el detalle de la boleta emitida.
+     * @return \Psr\Http\Message\ResponseInterface Respuesta con el detalle
+     * de la boleta emitida.
      */
-    public function obtenerDetalleBhe(int $numeroBhe)
+    public function obtenerDetalleBhe(int $numeroBhe): ResponseInterface
     {
         $url = sprintf('/bhe/boletas/%d', $numeroBhe);
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }
@@ -89,11 +96,11 @@ class Bhe extends ApiBase
      * @return \Psr\Http\Message\ResponseInterface Respuesta con el
      * encabezado y detalle de la boleta emitida.
      */
-    public function emitirBhe(array $datosBoleta)
+    public function emitirBhe(array $datosBoleta): ResponseInterface
     {
         $url = '/bhe/emitir';
 
-        $response = $this->post($url, $datosBoleta);
+        $response = $this->post(resource: $url, data: $datosBoleta);
 
         return $response;
     }
@@ -106,11 +113,11 @@ class Bhe extends ApiBase
      * @return \Psr\Http\Message\ResponseInterface Respuesta con el
      * contenido del PDF de la BHE.
      */
-    public function descargarPdfBhe(int $numeroBhe)
+    public function descargarPdfBhe(int $numeroBhe): ResponseInterface
     {
         $url = sprintf('/bhe/pdf/%d', $numeroBhe);
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }
@@ -123,8 +130,10 @@ class Bhe extends ApiBase
      * @return \Psr\Http\Message\ResponseInterface Respuesta con la
      * confirmación del envío del email.
      */
-    public function enviarEmailBhe(int $numeroBhe, string $email)
-    {
+    public function enviarEmailBhe(
+        int $numeroBhe,
+        string $email
+    ): ResponseInterface {
         $url = sprintf('/bhe/email/%d', $numeroBhe);
         $data = [
             'destinatario' => [
@@ -132,28 +141,31 @@ class Bhe extends ApiBase
             ],
         ];
 
-        $response = $this->post($url, $data);
+        $response = $this->post(resource: $url, data: $data);
 
         return $response;
     }
 
     /**
-     * Recurso que permite anular una Boleta de Honorarios Electrónica específica.
+     * Recurso que permite anular una Boleta de Honorarios Electrónica
+     * específica.
      *
      * @param int $numeroBhe Número de la BHE registrada en BHExpress.
      * @param int $causa Causa de la anulación de la BHE.
      * @return \Psr\Http\Message\ResponseInterface Respuesta con el
      * encabezado de la boleta anulada.
      */
-    public function anularBhe(int $numeroBhe, int $causa)
-    {
+    public function anularBhe(
+        int $numeroBhe,
+        int $causa
+    ): ResponseInterface {
         $url = sprintf('/bhe/anular/%d', $numeroBhe);
 
         $data = [
             'causa' => $causa,
         ];
 
-        $response = $this->post($url, $data);
+        $response = $this->post(resource: $url, data: $data);
 
         return $response;
     }
@@ -163,14 +175,16 @@ class Bhe extends ApiBase
      *
      * @param int $bruto Monto bruto a convertir.
      * @param string $periodo Periodo para el cual calcular los totales.
-     * @return \Psr\Http\Message\ResponseInterface|null Respuesta con el
+     * @return \Psr\Http\Message\ResponseInterface Respuesta con el
      * monto líquido calculado.
      */
-    public function calcularMontoLiquido(int $bruto, string $periodo)
-    {
+    public function calcularMontoLiquido(
+        int $bruto,
+        string $periodo
+    ): ResponseInterface {
         $url = sprintf('/bhe/liquido/%d/%s', $bruto, $periodo);
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }
@@ -180,14 +194,16 @@ class Bhe extends ApiBase
      *
      * @param int $liquido Monto líquido a convertir.
      * @param string $periodo Periodo para el cual calcular los totales.
-     * @return \Psr\Http\Message\ResponseInterface|null Respuesta con el
+     * @return \Psr\Http\Message\ResponseInterface Respuesta con el
      * monto bruto calculado.
      */
-    public function calcularMontoBruto(int $liquido, string $periodo)
-    {
+    public function calcularMontoBruto(
+        int $liquido,
+        string $periodo
+    ): ResponseInterface {
         $url = sprintf('/bhe/bruto/%d/%s', $liquido, $periodo);
 
-        $response = $this->get($url);
+        $response = $this->get(resource: $url);
 
         return $response;
     }

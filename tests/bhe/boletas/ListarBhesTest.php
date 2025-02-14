@@ -41,7 +41,7 @@ class ListarBhesTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
     }
 
@@ -52,26 +52,32 @@ class ListarBhesTest extends AbstractBoletas
      * o si la conexión falla.
      * @return void
      */
-    public function testListarBhes()
+    public function testListarBhes(): void
     {
         try {
             $fecha_desde = env(
-                'TEST_FECHA_DESDE',
-                date('Y-m-d', strtotime('-30 days'))
+                varname: 'TEST_FECHA_DESDE',
+                default: date(
+                    format: 'Y-m-d',
+                    timestamp: strtotime('-30 days')
+                )
             );
             $filtros = [
                 'fecha_desde' => $fecha_desde,
                 'fecha_hasta' => date('Y-m-d'),
             ];
-            $response = self::$client->listarBhes($filtros);
+            $response = self::$client->listarBhes(filtros: $filtros);
 
             $this->assertTrue(true);
 
             if (self::$verbose) {
-                echo "\n",'test_boleta_listar() listar ',$response->getBody(),"\n";
+                echo "\n",
+                'test_boleta_listar() listar ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()

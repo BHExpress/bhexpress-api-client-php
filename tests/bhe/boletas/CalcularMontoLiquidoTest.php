@@ -38,7 +38,7 @@ class CalcularMontoLiquidoTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
-        self::$verbose = env('TEST_VERBOSE', false);
+        self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
     }
 
@@ -49,20 +49,26 @@ class CalcularMontoLiquidoTest extends AbstractBoletas
      * si falla la conexión.
      * @return void
      */
-    public function testCalcularMontoLiquido()
+    public function testCalcularMontoLiquido(): void
     {
         $valorBruto = 100000;
         $fecha = date('Y').'01';
         try {
-            $response = self::$client->calcularMontoLiquido($valorBruto, $fecha);
+            $response = self::$client->calcularMontoLiquido(
+                $valorBruto,
+                $fecha
+            );
 
             $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
-                echo "\n",'test_calcular_monto_liquido() detalle ',$response->getBody(),"\n";
+                echo "\n",
+                'test_calcular_monto_liquido() detalle ',
+                $response->getBody(),
+                "\n";
             }
         } catch (ApiException $e) {
-            throw new ApiException(sprintf(
+            throw new ApiException(message: sprintf(
                 '[ApiException %d] %s',
                 $e->getCode(),
                 $e->getMessage()
