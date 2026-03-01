@@ -1,12 +1,12 @@
 vendor/
 test.env
 .phpunit.result.cache
-Dockerfile
+
+composer.lock
 
 var/
 tools/
 build/
 tests/archivos/bhe_emitidas_pdf/*
 
-prueba-ejemplo.php
 phpstan-baseline.neon

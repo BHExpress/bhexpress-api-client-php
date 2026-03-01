@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 /**
- * BHExpress
- * Copyright (C) SASCO SpA (https://sasco.cl)
+ * BHExpress: Cliente de API en PHP.
+ * Copyright (C) BHExpress <https://www.bhexpress.cl>
  *
  * Este programa es software libre: usted puede redistribuirlo y/o modificarlo
  * bajo los términos de la GNU Lesser General Public License (LGPL) publicada
