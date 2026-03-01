@@ -2,8 +2,6 @@ BHExpress: Cliente de API en PHP
 ================================
 
 [![CI Workflow](https://github.com/bhexpress/bhexpress-api-client-php/actions/workflows/ci.yml/badge.svg?branch=master&event=push)](https://github.com/bhexpress/bhexpress-api-client-php/actions/workflows/ci.yml?query=branch%3Amaster)
-[![Scrutinizer](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/)
-[![Coverage](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/)
 [![Licencia](https://poser.pugx.org/bhexpress/bhexpress-api-client/license)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
 [![Descargas Totales](https://poser.pugx.org/bhexpress/bhexpress-api-client/downloads)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
 [![Descargas Mensuales](https://poser.pugx.org/bhexpress/bhexpress-api-client/d/monthly)](https://packagist.org/packages/bhexpress/bhexpress-api-client)
@@ -35,3 +33,4 @@ Enlaces
 - [Sitio web BHExpress](https://www.bhexpress.cl).
 - [Código fuente en GitHub](https://github.com/BHExpress/bhexpress-api-client-php).
 - [Paquete en Packagist](https://packagist.org/packages/bhexpress/bhexpress-api-client).
+- [Documentación](https://api-client-php.docs.bhexpress.cl/).
