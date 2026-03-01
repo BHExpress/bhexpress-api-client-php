@@ -4,12 +4,6 @@ Docs: bhexpress-api-client-php
 .. image:: https://github.com/bhexpress/bhexpress-api-client-php/actions/workflows/ci.yml/badge.svg?branch=master&event=push
    :target: https://github.com/bhexpress/bhexpress-api-client-php/actions/workflows/ci.yml?query=branch%3Amaster
 
-.. image:: https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/badges/quality-score.png?b=master
-   :target: https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/
-
-.. image:: https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/badges/coverage.png?b=master
-   :target: https://scrutinizer-ci.com/g/bhexpress/bhexpress-api-client-php/
-
 .. image:: https://poser.pugx.org/bhexpress/bhexpress-api-client/license
    :target: https://packagist.org/packages/bhexpress/bhexpress-api-client
 
@@ -37,4 +31,4 @@ Enlaces
 - `Sitio web BHExpress <https://www.bhexpress.cl>`_
 - `Código fuente en GitHub <https://github.com/bhexpress/bhexpress-api-client-php>`_
 - `Paquete en Packagist <https://packagist.org/packages/bhexpress/bhexpress-api-client>`_
-- `Documentación <https://developers.bhexpress.cl/>`_
+- `Documentación <https://api-client-php.docs.bhexpress.cl/>`_
