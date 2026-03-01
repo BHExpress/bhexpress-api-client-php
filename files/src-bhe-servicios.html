@@ -140,8 +140,8 @@
             <p class="phpdocumentor-summary">BHExpress
 Copyright (C) SASCO SpA (https://sasco.cl)</p>
 
-
-    <section class="phpdocumentor-description"><p>Este programa es software libre: usted puede redistribuirlo y/o modificarlo
+        
+            <section class="phpdocumentor-description"><p>Este programa es software libre: usted puede redistribuirlo y/o modificarlo
 bajo los términos de la GNU Lesser General Public License (LGPL) publicada
 por la Fundación para el Software Libre, ya sea la versión 3 de la Licencia,
 o (a su elección) cualquier versión posterior de la misma.</p>
@@ -154,12 +154,10 @@ Public License (LGPL) para obtener una información más detallada.</p>
 <a href="http://www.gnu.org/licenses/lgpl.html">http://www.gnu.org/licenses/lgpl.html</a>.</p>
 </section>
 
+        
 
 
-
-
-
-
+        
 <h3 id="toc">
     Table of Contents
     <a href="files/src-bhe-servicios.html#toc" class="headerlink"><i class="fas fa-link"></i></a>
@@ -177,7 +175,6 @@ Public License (LGPL) para obtener una información más detallada.</p>
     <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/bhexpress-api-client-bhe-Servicios.html"><abbr title="\bhexpress\api_client\bhe\Servicios">Servicios</abbr></a></dt><dd>Módulo que permite obtener información de servicios registrados que
 provees desde la cuenta de BHExpress.</dd>    </dl>
-
 
 
 
@@ -226,6 +223,8 @@ provees desde la cuenta de BHExpress.</dd>    </dl>
                         if (xhr.status < 400 && xhr.responseText) {
                             code.textContent = xhr.responseText;
                             Prism.highlightElement(code);
+                            d=document.getElementsByClassName("line-numbers");
+                            d[0].scrollTop = d[0].children[1].offsetTop;
                             return;
                         }
 
