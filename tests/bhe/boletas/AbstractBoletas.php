@@ -27,12 +27,14 @@ use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Bhe;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
+use Tests\Helpers\FunctionHelpers;
 
 /**
  * Clase abstracta que permite ejecutar un método compartido entre sus clases hijas.
  */
 class AbstractBoletas extends TestCase
 {
+    use FunctionHelpers;
     /**
      * Instancia de servicios API Client a través de Bhe.
      *
@@ -49,6 +51,7 @@ class AbstractBoletas extends TestCase
      */
     protected function listar(): ResponseInterface
     {
+        self::requireEnv('BHEXPRESS_API_TOKEN');
         $fecha_desde = env(
             varname: 'TEST_FECHA_DESDE',
             default: date(

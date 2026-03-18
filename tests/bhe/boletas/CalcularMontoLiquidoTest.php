@@ -25,10 +25,12 @@ use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Bhe;
 use bhexpress\tests\bhe\AbstractBoletas;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Tests\Helpers\FunctionHelpers;
 
 #[CoversClass(Bhe::class)]
 class CalcularMontoLiquidoTest extends AbstractBoletas
 {
+    use FunctionHelpers;
     /**
      * Variable que permite desplegar en consola los resultados.
      *
@@ -38,6 +40,7 @@ class CalcularMontoLiquidoTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
+        self::requireEnv('BHEXPRESS_API_TOKEN');
         self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
     }

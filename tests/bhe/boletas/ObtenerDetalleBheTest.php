@@ -25,6 +25,7 @@ use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Bhe;
 use bhexpress\tests\bhe\AbstractBoletas;
 use PHPUnit\Framework\Attributes\CoversClass;
+use Tests\Helpers\FunctionHelpers;
 
 #[CoversClass(Bhe::class)]
 /**
@@ -32,6 +33,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
  */
 class ObtenerDetalleBheTest extends AbstractBoletas
 {
+    use FunctionHelpers;
     /**
      * Variable que permite desplegar en consola los resultados.
      *
@@ -41,6 +43,7 @@ class ObtenerDetalleBheTest extends AbstractBoletas
 
     public static function setUpBeforeClass(): void
     {
+        self::requireEnv('BHEXPRESS_API_TOKEN');
         self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Bhe();
     }

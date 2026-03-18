@@ -25,6 +25,7 @@ use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Servicios;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+use Tests\Helpers\FunctionHelpers;
 
 #[CoversClass(Servicios::class)]
 /**
@@ -32,6 +33,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ListarServiciosTest extends TestCase
 {
+    use FunctionHelpers;
     /**
      * Variable que permite desplegar en consola los resultados.
      *
@@ -48,6 +50,7 @@ class ListarServiciosTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
+        self::requireEnv('BHEXPRESS_API_TOKEN');
         self::$verbose = env(varname: 'TEST_VERBOSE', default: false);
         self::$client = new Servicios();
     }
