@@ -37,7 +37,7 @@ class ApiClient
      *
      * @var string
      */
-    private $api_url = 'https://bhexpress.cl';
+    private $api_url = 'https://app.bhexpress.cl';
 
     /**
      * El prefijo para las rutas de la API.
@@ -89,9 +89,9 @@ class ApiClient
      * @param string|null $url URL base de la API.
      */
     public function __construct(
-        string $token = null,
-        string $rut = null,
-        string $url = null
+        ?string $token = null,
+        ?string $rut = null,
+        ?string $url = null
     ) {
         $this->api_token = $token ?: $this->env('BHEXPRESS_API_TOKEN');
         if (!$this->api_token) {
@@ -193,7 +193,7 @@ class ApiClient
      * @return array El cuerpo de la respuesta HTTP decodificado como un arreglo.
      * @throws ApiException Si no hay respuesta previa o el cuerpo no se puede decodificar.
      */
-    public function getBodyDecoded(): mixed
+    public function getBodyDecoded(): ?array
     {
         $decodedBody = json_decode(
             json: $this->getBody(),
@@ -386,7 +386,7 @@ class ApiClient
         string $resource,
         array $data = [],
         array $headers = [],
-        string $method = null,
+        ?string $method = null,
         array $options = []
     ): static {
         $this->last_response = null;
@@ -420,20 +420,29 @@ class ApiClient
             $options[\GuzzleHttp\RequestOptions::JSON] = $data;
         }
 
-        // realizar consulta HTTP
+        // Ejecutar consulta al SII.
         try {
             $this->last_response = $client->request(
                 method: $method,
                 uri: $this->last_url,
                 options: $options
             );
-        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+        } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+            // Obtener la respuesta de la llamada.
             $this->last_response = $e->getResponse();
+
+            // Si no es un error 401 con problema de sesión se lanza la excepción.
             $this->throwException();
+        } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+            throw new ApiException('Error de conexión con el SII: ' . $e->getMessage(), 500);
         }
+
+        // Si no se reintentó se lanza excepción por no ser código 200.
         if ($this->getLastResponse()->getStatusCode() != 200) {
             $this->throwException();
         }
+
+
         return $this;
     }
 
@@ -462,7 +471,7 @@ class ApiClient
         }
 
         // Se maneja el caso donde no se encuentra un mensaje de error específico
-        if (!$message || $message === '') {
+        if (!$message) {
             $message = sprintf(
                 '[BHExpress API] Código HTTP %d: %s',
                 $code,

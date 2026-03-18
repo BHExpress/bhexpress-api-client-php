@@ -64,7 +64,7 @@ class ListarReceptoresTest extends TestCase
         try {
             $response = self::$client->listarReceptores();
 
-            $this->assertTrue(true);
+            $this->assertSame(200, $response->getStatusCode());
 
             if (self::$verbose) {
                 echo "\n",

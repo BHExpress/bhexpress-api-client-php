@@ -70,7 +70,13 @@ class ObtenerInfoServicioTest extends TestCase
             $servicioDec = json_decode(
                 json: $responseServicio->getBody()->getContents(),
                 associative: true
-            )['results'][0];
+            )['results'][0] ?? null;
+
+
+            if ($servicioDec === null) {
+                $this->markTestSkipped("No existen lista de servicios provistos
+                                        por el usuario");
+            }
 
             $codigo = $servicioDec['codigo'];
 

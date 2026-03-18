@@ -68,7 +68,12 @@ class DescargarPdfBheTest extends AbstractBoletas
         $body_dec = json_decode(
             json: $response_body->getBody()->getContents(),
             associative: true
-        )['results'][0];
+        )['results'][0] ?? null;
+
+        if ($body_dec === null) {
+            $this->markTestSkipped("No existen BHE emitidas");
+        }
+
         $numero_bhe = $body_dec['numero'];
 
         try {

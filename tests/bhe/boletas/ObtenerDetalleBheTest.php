@@ -58,7 +58,12 @@ class ObtenerDetalleBheTest extends AbstractBoletas
         $body_dec = json_decode(
             json: $listaBhes->getBody()->getContents(),
             associative: true
-        )['results'][0];
+        )['results'][0] ?? null;
+
+        if ($body_dec === null) {
+            $this->markTestSkipped("No existen BHE emitidas");
+        }
+
         $numeroBhe = $body_dec['numero'];
 
         try {

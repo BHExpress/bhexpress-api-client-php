@@ -36,9 +36,9 @@ class ApiBase extends ApiClient
      * @param string|null $url Versión de la API.
      */
     public function __construct(
-        string $token = null,
-        string $rut = null,
-        string $url = null
+        ?string $token = null,
+        ?string $rut = null,
+        ?string $url = null
     ) {
         parent::__construct(token: $token, rut: $rut, url: $url);
     }

@@ -44,9 +44,9 @@ class Receptores extends ApiBase
      * usará una URL por defecto.
      */
     public function __construct(
-        string $token = null,
-        string $rut = null,
-        string $url = null
+        ?string $token = null,
+        ?string $rut = null,
+        ?string $url = null
     ) {
         parent::__construct(token: $token, rut: $rut, url: $url);
     }
@@ -77,8 +77,8 @@ class Receptores extends ApiBase
      * información del receptor.
      */
     public function obtenerDetalleReceptor(
-        int $rut = null,
-        int $codigo = null
+        ?int $rut = null,
+        ?int $codigo = null
     ): ResponseInterface {
         $url = '/bhe/receptores';
 

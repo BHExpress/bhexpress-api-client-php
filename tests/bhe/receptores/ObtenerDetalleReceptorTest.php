@@ -67,7 +67,12 @@ class ObtenerDetalleReceptorTest extends TestCase
             $listaDec = json_decode(
                 json: $responseLista->getBody()->getContents(),
                 associative: true
-            )['results'][0];
+            )['results'][0] ?? null;
+
+            if ($listaDec === null) {
+                $this->markTestSkipped("No existen lista de receptores");
+            }
+
             $rut = $listaDec['rut'];
 
             $response = self::$client->obtenerDetalleReceptor(rut: $rut);

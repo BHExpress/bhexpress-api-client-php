@@ -55,7 +55,7 @@
     </logging>
     <php>
         <ini name="memory_limit" value="-1" />
-        <env name="BHEXPRESS_API_URL" value="https://bhexpress.cl" />
+        <env name="BHEXPRESS_API_URL" value="https://app.bhexpress.cl" />
         <env name="BHEXPRESS_EMISOR_RUT" value="76192083-9" />
     </php>
 </phpunit>
