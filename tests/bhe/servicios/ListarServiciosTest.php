@@ -25,7 +25,7 @@ use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Servicios;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Tests\Helpers\FunctionHelpers;
+use bhexpress\tests\Helpers\FunctionHelpers;
 
 #[CoversClass(Servicios::class)]
 /**

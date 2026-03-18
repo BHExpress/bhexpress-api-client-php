@@ -25,7 +25,7 @@ use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Bhe;
 use bhexpress\tests\bhe\AbstractBoletas;
 use PHPUnit\Framework\Attributes\CoversClass;
-use Tests\Helpers\FunctionHelpers;
+use bhexpress\tests\Helpers\FunctionHelpers;
 
 #[CoversClass(Bhe::class)]
 /**

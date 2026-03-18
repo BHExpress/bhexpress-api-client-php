@@ -22,7 +22,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "bhexpress\\tests\\bhe\\": "tests/bhe/boletas/"
+            "bhexpress\\tests\\bhe\\": "tests/bhe/boletas/",
+            "bhexpress\\tests\\Helpers\\": "tests/Helpers/"
         }
     },
     "require": {

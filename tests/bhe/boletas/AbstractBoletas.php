@@ -27,7 +27,7 @@ use bhexpress\api_client\ApiException;
 use bhexpress\api_client\bhe\Bhe;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Tests\Helpers\FunctionHelpers;
+use bhexpress\tests\Helpers\FunctionHelpers;
 
 /**
  * Clase abstracta que permite ejecutar un método compartido entre sus clases hijas.

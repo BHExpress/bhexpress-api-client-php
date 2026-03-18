@@ -2,15 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Helpers;
+namespace bhexpress\tests\Helpers;
 
-use apigatewaycl\api_client\ApiException;
 use PHPUnit\Framework\SkippedTestSuiteError;
 
 trait FunctionHelpers
 {
-    protected static $client;
-
     protected static function requireEnv(string $str_var): void
     {
         $value =
